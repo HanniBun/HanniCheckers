@@ -16,13 +16,4 @@ public class HexagonSizeScript : MonoBehaviour {
         new Vector3(-innerRadius, 0f, -0.5f * outerRadius),
         new Vector3(-innerRadius, 0f, 0.5f * outerRadius)
     };
-
-
-    void Start () {
-		
-	}
-	
-	void Update () {
-		
-	}
 }

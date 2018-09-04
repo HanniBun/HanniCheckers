@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class HexCell : MonoBehaviour {
+    // This script is on every prefab of hexagons.
 
-	// Use this for initialization
 	void Start () {
 		
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
 		
 	}

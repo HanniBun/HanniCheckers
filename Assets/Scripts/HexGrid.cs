@@ -5,10 +5,11 @@ using UnityEngine.UI;
 
 public class HexGrid : MonoBehaviour {
 
-    public int width = 6;  
-    public int height = 6;  // how large we want the grid to be.
+    public int width = 13;  
+    public int height = 17;  
 
     public HexCell cellPrefab;  // Our base shape we use for the grid.
+    HexMesh hexMesh;
 
     HexCell[] cells;  // Array of the shapes.
 
@@ -19,6 +20,7 @@ public class HexGrid : MonoBehaviour {
     void Awake()  // Creates the grid.
     {
         gridCanvas = GetComponentInChildren<Canvas>();
+        hexMesh = GetComponentInChildren<HexMesh>();
 
         cells = new HexCell[height * width]; // determines the size. 
 
@@ -31,10 +33,15 @@ public class HexGrid : MonoBehaviour {
         }
     }
 
+    void Start()  // Remember: This happens AFTER Awake. So, before this happens, the script knows the size of the board.
+    {
+        hexMesh.Triangulate(cells);
+    }
+
     void CreateCell(int x, int z, int i)  //CreateCell takes in the xyz-coordinates we give it.
     {
         Vector3 position;
-        position.x = (x + z * 0.5f - z / 2) * (HexagonSizeScript.innerRadius * 2f);  // Offset, because hexagons are like that.
+        position.x = (x + z * 0.5f - z / 2) * (HexagonSizeScript.innerRadius * 2f);  // Offset, because hexagons.
         position.y = 0f;
         position.z = z * (HexagonSizeScript.outerRadius * 1.5f);
         if (!(x == 3 && z == 16))
@@ -51,13 +58,5 @@ public class HexGrid : MonoBehaviour {
         }
     }
 
-    // Use this for initialization
-    void Start () {
-		
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-}
+

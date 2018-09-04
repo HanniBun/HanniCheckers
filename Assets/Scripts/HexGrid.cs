@@ -10,14 +10,15 @@ public class HexGrid : MonoBehaviour {
 
     public HexCell cellPrefab;  // Our base shape we use for the grid.
     HexMesh hexMesh;
+    Canvas gridCanvas;
+
+    bool invalidBuildCell;
 
     HexCell[] cells;  // Array of the shapes.
 
     public Text cellLabelPrefab;
 
-    Canvas gridCanvas;
-
-    void Awake()  // Creates the grid.
+    void Awake()  
     {
         gridCanvas = GetComponentInChildren<Canvas>();
         hexMesh = GetComponentInChildren<HexMesh>();
@@ -35,7 +36,7 @@ public class HexGrid : MonoBehaviour {
 
     void Start()  // Remember: This happens AFTER Awake. So, before this happens, the script knows the size of the board.
     {
-        hexMesh.Triangulate(cells);
+        //hexMesh.Triangulate(cells);
     }
 
     void CreateCell(int x, int z, int i)  //CreateCell takes in the xyz-coordinates we give it.
@@ -44,7 +45,9 @@ public class HexGrid : MonoBehaviour {
         position.x = (x + z * 0.5f - z / 2) * (HexagonSizeScript.innerRadius * 2f);  // Offset, because hexagons.
         position.y = 0f;
         position.z = z * (HexagonSizeScript.outerRadius * 1.5f);
-        if (!(x == 3 && z == 16))
+        //if (!((x <= 6 || x >= 8) && z == 0)) Old check.
+            BuildCheckIfValid(x, z, cells[i]); // check to see if it's valid or not. Made by ME!
+        if (invalidBuildCell == false)
         {
             HexCell cell = cells[i] = Instantiate<HexCell>(cellPrefab);  // Actually creates the shape.
             cell.transform.SetParent(transform, false);  // SetParent so that the hierarchy doesn't flood with hexagons. Haha!
@@ -55,6 +58,14 @@ public class HexGrid : MonoBehaviour {
             label.rectTransform.anchoredPosition =
                 new Vector2(position.x, position.z);
             label.text = x.ToString() + "\n" + z.ToString();
+        }
+    }
+
+    void BuildCheckIfValid(int x, int z, HexCell cellToBuild)
+    {
+        if (z == 0 && x <= 6 || x >= 8 || z == 1 && x <= 5 && x >= 8 || z == 2 && x <= 5 || x >= 8) // Wow, this looks messy. And it's just the first 3 rows.      
+            {
+            invalidBuildCell = true;
         }
     }
 

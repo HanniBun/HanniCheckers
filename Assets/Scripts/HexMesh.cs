@@ -2,39 +2,36 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]  
+[RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 public class HexMesh : MonoBehaviour
-{ // Creates the actual hexagonal texture on the hex cell.
+{
     Mesh hexMesh;
     List<Vector3> vertices;
     List<int> triangles;
 
-
     void Awake()
     {
         GetComponent<MeshFilter>().mesh = hexMesh = new Mesh();
-
         hexMesh.name = "Hex Mesh";
         vertices = new List<Vector3>();
         triangles = new List<int>();
     }
 
-    public void Triangulate(HexCell[] cells) // Calls the entire Cells[] array in the HexCell script. Dvs hela spelplanen, med varje position inuti arrayen.
+    /*public void Triangulate(HexCell[] cells)
     {
         hexMesh.Clear();
         vertices.Clear();
-        triangles.Clear();  // Clears the things in its lists.
+        triangles.Clear();
         for (int i = 0; i < cells.Length; i++)
         {
-            Triangulate(cells[i]); 
+            Triangulate(cells[i]);
         }
         hexMesh.vertices = vertices.ToArray();
         hexMesh.triangles = triangles.ToArray();
         hexMesh.RecalculateNormals();
     }
 
-
-    void Triangulate(HexCell cell)  // second triangulate
+    void Triangulate(HexCell cell)
     {
         Vector3 center = cell.transform.localPosition;
         AddTriangle(
@@ -53,8 +50,6 @@ public class HexMesh : MonoBehaviour
         triangles.Add(vertexIndex);
         triangles.Add(vertexIndex + 1);
         triangles.Add(vertexIndex + 2);
-    }
-
-
-
+    }*/
 }
+

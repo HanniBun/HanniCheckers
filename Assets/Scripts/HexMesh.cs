@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
-public class HexMesh : MonoBehaviour
-{
+public class HexMesh : MonoBehaviour {
+
     Mesh hexMesh;
     List<Vector3> vertices;
     List<int> triangles;
@@ -17,7 +17,7 @@ public class HexMesh : MonoBehaviour
         triangles = new List<int>();
     }
 
-    /*public void Triangulate(HexCell[] cells)
+    public void Triangulate(HexCell[] cells)
     {
         hexMesh.Clear();
         vertices.Clear();
@@ -34,11 +34,14 @@ public class HexMesh : MonoBehaviour
     void Triangulate(HexCell cell)
     {
         Vector3 center = cell.transform.localPosition;
-        AddTriangle(
+        for (int i = 0; i < 6; i++)
+        {
+            AddTriangle(
             center,
-            center + HexagonSizeScript.corners[0],
-            center + HexagonSizeScript.corners[1]
+            center + HexMetrics.corners[i],
+            center + HexMetrics.corners[i + 1]
         );
+        }
     }
 
     void AddTriangle(Vector3 v1, Vector3 v2, Vector3 v3)
@@ -50,6 +53,5 @@ public class HexMesh : MonoBehaviour
         triangles.Add(vertexIndex);
         triangles.Add(vertexIndex + 1);
         triangles.Add(vertexIndex + 2);
-    }*/
+    }
 }
-

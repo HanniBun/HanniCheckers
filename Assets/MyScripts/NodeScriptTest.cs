@@ -35,14 +35,7 @@ public class NodeScriptTest : MonoBehaviour
     {
         width = rowLengths.Length;  // Shows 17.
         height = testGrid.Length; // Shows 16.
-        /*
-        for (int z = 0, i = 0; z < testGrid.Length; z++)  // Loops through this 16 times.
-        {
-            for (int x = 0; x < rowLengths.Length; x++) // Loops through this 17 times.
-            {
-                CreateCell(x, z, i++);
-            }
-        }*/
+
 
         for (int i = 0; i < testGrid.Length; i++) // Loops through 16 empty rows.
         {
@@ -59,23 +52,7 @@ public class NodeScriptTest : MonoBehaviour
                 virtualBoard[i][j] = tile.GetComponent<IndividualNodes>();
                 zLed++;
 
-                //virtualBoard[i][j].AssignIndex(j, i);
-                //virtualBoard[i][j] = tile.GetComponent<TileScript>();
-
-                // virtualBoard[i][j].AssignIndex(j, i);
             }
-
-            /* void CreateCell(int x, int z, int i)
-             {
-                 Vector3 position;
-                // position.x = /*(x + z * 0.5f - z / 2) /*(HexMetrics.innerRadius * 2f)*/
-            //x;
-            // position.y = 0f;
-            // position.z = z  /*(HexMetrics.outerRadius * 1.5f)*/ ;
-
-            // IndividualNodes cell = cells[i] = Instantiate<IndividualNodes>(testNoderino);
-            //testNode.transform.SetParent(transform, false);
-            // testNoderino.transform.localPosition = position;
 
         }
     }

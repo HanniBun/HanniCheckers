@@ -16,14 +16,16 @@ public class HexGrid : MonoBehaviour {
 
     public Text cellLabelPrefab;
 
+    float testVarX = 0f; 
+ 
     Canvas gridCanvas;
 
-    HexMesh hexMesh;
+    //HexMesh hexMesh;
 
     void Awake()
     {
         gridCanvas = GetComponentInChildren<Canvas>();
-        hexMesh = GetComponentInChildren<HexMesh>();
+        //hexMesh = GetComponentInChildren<HexMesh>();
 
         cells = new HexCell[121]; // Alla celler (121 st) i en array.
 
@@ -31,7 +33,7 @@ public class HexGrid : MonoBehaviour {
         {
             for (int x = 0; x < rowLengths[z]; x++) //Hämtar vilken rad, går igenom det indexet i rowLengths (z-värdet), X är det som ökar
             {
-                CreateCell(x, z, i++);
+                CreateCell(x, z, i++); // Hämtar x = 1, 1, 2, 1, 2, 3... Hämtar z = vilken rad = 1, 2, 2, 3, 3, 3... samt i som bara ökar hela tiden.
             }
         }
     }
@@ -41,14 +43,13 @@ public class HexGrid : MonoBehaviour {
         //hexMesh.Triangulate(cells);
     }
 
-    void CreateCell(int x, int z, int i)  // x = vilken plats i raden (rowLengths), max är 1, 2, 3, 4, 13... , z = vilken rad(testGrid), i = ett värde för vilken initiering det är, den ökar för varje.
+    void CreateCell(int x, int z, int i)  // x = vilken plats i raden (rowLengths), dvs 1, 1, 2, 1, 2, 3... , z = vilken rad, i = ett värde för vilken initiering det är, den ökar för varje.
     {
         Vector3 position;
-        position.x = x * (HexMetrics.innerRadius * 2f) + rowStartXCoordinate[z] ; // + /*(HexMetrics.innerRadius * 2f)*/ +rowStartXCoordinate[z] /*negativt obs*/;    // innerRadius * 2f equals around 16f. 
+        position.x = (x + z * 0.5f - z / 2) * (HexMetrics.innerRadius * 2f);//(HexMetrics.innerRadius * 2) * -(rowLengths[z] - x) - (z/2);
         position.y = 0f;
         position.z = z * (HexMetrics.outerRadius * 1.5f);
 
-        Debug.Log(i.ToString());
 
         HexCell cell = cells[i] = Instantiate<HexCell>(cellPrefab); 
         cell.transform.SetParent(transform, false);

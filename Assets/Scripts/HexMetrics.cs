@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class HexMetrics : MonoBehaviour {
 
+    // This is an old code taken from https://catlikecoding.com/unity/tutorials/hex-map/part-1/
+
     public const float outerRadius = 10f;
 
     public const float innerRadius = outerRadius * 0.866025404f;

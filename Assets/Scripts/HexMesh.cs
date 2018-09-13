@@ -5,6 +5,11 @@ using UnityEngine;
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 public class HexMesh : MonoBehaviour {
 
+
+    // Like HexMetrics, this too is a script taken from https://catlikecoding.com/unity/tutorials/hex-map/part-1
+    // At first I wanted each cell to be an actual hexagon, but I had some problems while making the shape of the board and kind of got stuck. Right now I'm not using either this nor HexMetrics.
+
+
     Mesh hexMesh;
     List<Vector3> vertices;
     List<int> triangles;

@@ -8,32 +8,23 @@ public class ClickerManager : MonoBehaviour {
     HexCell myClickedCell;
 
     static int layer = 8;
-    int layerMask = 1 << layer;
+    int layerMask = 1 << layer; 
+    // Had an idea on using layermasks with the raycast instead of GetComponent before. Keeping this variable if I need it in the future for some reason.
 
-    // Use this for initialization
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
     void Update()
     {
-
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit, layerMask) /*&& hit.transform.gameObject == myClickedCell.transform.gameObject*/)
-            {
-                hit.collider.gameObject.GetComponent<HexCell>();  // I somehow wanna click on a cell and see its index in HexGrid myGameBoard.
-                // Maybe somehow reach the array from here?
-                print("I've hit " + hit.collider.gameObject.ToString());
-                Destroy(hit.transform.gameObject);
+            if (Physics.Raycast(ray, out hit) && hit.collider.gameObject.GetComponent<HexCell>() == true)
+            {                  
+                print("Hello! My index is... " + hit.collider.gameObject.GetComponent<HexCell>().row.ToString() + "," + hit.collider.gameObject.GetComponent<HexCell>().col);  
+                // This could probably be made smoother. Gonna change it later, probably. Right now I'm just trying to get the cell's index on mouse click.
             }
             else
-                print("No.");
+                print("Area out of bounds");
         }
     }
 }

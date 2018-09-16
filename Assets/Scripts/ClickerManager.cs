@@ -7,8 +7,10 @@ public class ClickerManager : MonoBehaviour {
     [SerializeField]
     HexCell myClickedCell;
 
-    static int layer = 8;
-    int layerMask = 1 << layer; 
+    Color redColor = Color.red;
+
+    //static int layer = 8;
+    //int layerMask = 1 << layer; 
     // Had an idea on using layermasks with the raycast instead of GetComponent before. Keeping this variable if I need it in the future for some reason.
 
     void Update()
@@ -20,7 +22,11 @@ public class ClickerManager : MonoBehaviour {
 
             if (Physics.Raycast(ray, out hit) && hit.collider.gameObject.GetComponent<HexCell>() == true)
             {                  
-                print("Hello! My index is... " + hit.collider.gameObject.GetComponent<HexCell>().row.ToString() + "," + hit.collider.gameObject.GetComponent<HexCell>().col);  
+                print("Hello! My index is... " + hit.collider.gameObject.GetComponent<HexCell>().row.ToString() + "," + hit.collider.gameObject.GetComponent<HexCell>().col);
+                print("And my position in the world is..." + hit.collider.transform.position.ToString());
+
+                hit.collider.gameObject.GetComponent<HexCell>().WhoAreMyNeighbors(hit.collider.gameObject.transform.position.x, hit.collider.gameObject.transform.position.z);
+                //hit.collider.gameObject.GetComponent<HexCell>().WhoAreMyNeighbors(hit.collider.gameObject.transform.position.x, hit.collider.gameObject.transform.position.z);
                 // This could probably be made smoother. Gonna change it later, probably. Right now I'm just trying to get the cell's index on mouse click.
             }
             else

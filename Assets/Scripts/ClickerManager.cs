@@ -7,7 +7,9 @@ public class ClickerManager : MonoBehaviour {
     [SerializeField]
     HexCell myClickedCell;
 
-    Color redColor = Color.red;
+    public Material clickedMaterial;
+    public Material unClickMyMATERIAL;
+
 
     //static int layer = 8;
     //int layerMask = 1 << layer; 
@@ -23,11 +25,9 @@ public class ClickerManager : MonoBehaviour {
             if (Physics.Raycast(ray, out hit) && hit.collider.gameObject.GetComponent<HexCell>() == true)
             {                  
                 print("Hello! My index is... " + hit.collider.gameObject.GetComponent<HexCell>().row.ToString() + "," + hit.collider.gameObject.GetComponent<HexCell>().col);
-                print("And my position in the world is..." + hit.collider.transform.position.ToString());
-
-                hit.collider.gameObject.GetComponent<HexCell>().WhoAreMyNeighbors(hit.collider.gameObject.transform.position.x, hit.collider.gameObject.transform.position.z);
-                //hit.collider.gameObject.GetComponent<HexCell>().WhoAreMyNeighbors(hit.collider.gameObject.transform.position.x, hit.collider.gameObject.transform.position.z);
-                // This could probably be made smoother. Gonna change it later, probably. Right now I'm just trying to get the cell's index on mouse click.
+                //print("And my position in the world is..." + hit.collider.transform.position.ToString());
+                hit.collider.gameObject.GetComponent<HexCell>().WhoAreMyNeighbors();
+                hit.collider.gameObject.GetComponent<Renderer>().material = clickedMaterial;
             }
             else
                 print("Area out of bounds");

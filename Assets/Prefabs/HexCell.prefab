@@ -111,7 +111,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2c3935b99b4e794f8b25a60745e2749, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IndexOnBoard: 0
+  myHexGrid: {fileID: 0}
+  neighborMaterial: {fileID: 2100000, guid: af28d243496131b4ebeba408d60914f3, type: 2}
+  ENeighbor: {fileID: 0}
+  WNeighbor: {fileID: 0}
+  SWNeighbor: {fileID: 0}
+  NWNeighbor: {fileID: 0}
+  SENeighbor: {fileID: 0}
+  NENeighbor: {fileID: 0}
 --- !u!136 &136356344615572190
 CapsuleCollider:
   m_ObjectHideFlags: 1

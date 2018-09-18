@@ -14,6 +14,8 @@ public class HexCell : MonoBehaviour
     public int row { get; set; }   // Used so that each cell knows its "address",
     public int col { get; set; }   //i.e. its index in the myGameboard[][].
 
+    //public int positionOnCol { get; set; }
+
     //static string namerino = "Mr Cell"; // Trying out and playing with Static.
 
     bool occupied;
@@ -37,12 +39,10 @@ public class HexCell : MonoBehaviour
 
    public MeshRenderer myMesh { get; set; } // Work in progress...
 
-    List<HexCell> myNeighbors; // Temporary fix, I just need it to work right now.
-
     //Meshrenderer myMesh;
     private void Start()
     {
-        MeshRenderer myMesh = GetComponent<MeshRenderer>();
+        //MeshRenderer myMesh = GetComponent<MeshRenderer>();
         myHexGrid = FindObjectOfType<HexGrid>();
 
     }
@@ -94,43 +94,158 @@ public class HexCell : MonoBehaviour
         if ((col - myHexGrid.offsetAmount[row] + 1) < myHexGrid.AmountOfStuff[row]) // EAST neighbor check
         {
             ENeighbor = myHexGrid.myGameBoard[row][(col - myHexGrid.offsetAmount[row]) + 1];
-            Debug.Log("My eastern neighbor is... " + myHexGrid.myGameBoard[row][(col - myHexGrid.offsetAmount[row]) + 1].GetComponent<HexCell>().row.ToString() + "," + myHexGrid.myGameBoard[row][(col - myHexGrid.offsetAmount[row]) + 1].GetComponent<HexCell>().col);
             ENeighbor.gameObject.GetComponent<Renderer>().material = neighborMaterial;
         }
 
         else
         {
+           // print("No E neighbor");
             ENeighbor = null;
-            print((col - myHexGrid.offsetAmount[row]) + 1);
-            print("No neighbor to the East");
         }
 
         if ((col - myHexGrid.offsetAmount[row] - 1) > 0) // WEST neighbor check
         {
             WNeighbor = myHexGrid.myGameBoard[row][(col - myHexGrid.offsetAmount[row]) - 1];
-            Debug.Log("My western neighbor is... " + myHexGrid.myGameBoard[row][(col - myHexGrid.offsetAmount[row]) - 1].GetComponent<HexCell>().row.ToString() + "," + myHexGrid.myGameBoard[row][(col - myHexGrid.offsetAmount[row]) - 1].GetComponent<HexCell>().col);
             WNeighbor.gameObject.GetComponent<Renderer>().material = neighborMaterial;
         }
         else
         {
+            print("No W neighbor");
             WNeighbor = null;
-            print("No neighbor to the West");
         }
 
-        /*if (row % 2 == 0) // i.e. even row
+        if (myHexGrid.myGameBoard[row + 1] != null) // Check if there's a row over us. AND that there is a cell there. 
         {
-            if ()  // NE*/
-           // Debug.Log("|| (NW) X: " + (x - 1.5) + ", Z: " + (z + 1) + "|| (NE) X: " + (x + 1.5) + ", Z: " + (z + 1) + "|| (SW) X: " + (x - 1.5) + ", Z: " + (z - 1) + "|| (SE) X: " + (x + 1.5) + ", Z: " + (z - 1));
-            // NW: x - 1.5, z + 1;  NE: x + 1.5, z + 1;  SW: x - 1.5, z - 1;  SE: x + 1.5, z - 1;
+            if (row % 2 == 0) // Check NE, NW neighbors for even rows. Works as intended, AS LONG as the board isn't wonky. 
+            {
+                if (myHexGrid.myGameBoard[row + 1][(col - myHexGrid.offsetAmount[row])] != null) // NE neighbor check
+                {
+                    print(row.ToString() + "," + col + "(even) NE neighbor: " + myHexGrid.myGameBoard[row + 1][(col - myHexGrid.offsetAmount[row])].GetComponent<HexCell>().row.ToString() + ", " + myHexGrid.myGameBoard[row + 1][(col - myHexGrid.offsetAmount[row])].GetComponent<HexCell>().col.ToString());
+                    NENeighbor = myHexGrid.myGameBoard[row + 1][(col - myHexGrid.offsetAmount[row])];
+                    NENeighbor.gameObject.GetComponent<Renderer>().material = neighborMaterial;
+                }
 
-       // }
+                else
+                {
+                    print("(even)No NE neighbor");
+                    NENeighbor = null;
+                }
 
-        //if (row % 2 != 0) // i.e. uneven row
-        //{
-          // NW: x - 0.5, z + 1; NE: x 0.5, z + 1;  SW: x - 1, z - 1;  SE: x + 1, z - 1;*/
-        //}*/
+                if (myHexGrid.myGameBoard[row + 1][(col - myHexGrid.offsetAmount[row]) - 1] != null)  // NW neighbor check
+                {
+                    print(row.ToString() + "," + col + "(even)NW neighbor: " + myHexGrid.myGameBoard[row + 1][(col - myHexGrid.offsetAmount[row] - 1)].GetComponent<HexCell>().row.ToString() + ", " + myHexGrid.myGameBoard[row + 1][(col - myHexGrid.offsetAmount[row] - 1)].GetComponent<HexCell>().col.ToString());
+                    NWNeighbor = myHexGrid.myGameBoard[row + 1][(col - myHexGrid.offsetAmount[row]) - 1];
+                    NWNeighbor.gameObject.GetComponent<Renderer>().material = neighborMaterial;
+
+                }
+
+                else
+                {
+                    print("(even)No NW neighbor");
+                    NWNeighbor = null;
+                }
+            }
+
+            else if (row % 2 != 0) // Check NE, NW neighbors for uneven rows. Works as intended, as long as I fix the darn board.
+            {
+                if (myHexGrid.myGameBoard[row + 1][(col - myHexGrid.offsetAmount[row])/*+1*/] != null) // NE neighbor check (is this even right??)
+                {
+                    print(row.ToString() + "," + col + "(uneven) NE neighbor: " + myHexGrid.myGameBoard[row + 1][(col - myHexGrid.offsetAmount[row])/*+1*/].GetComponent<HexCell>().row.ToString() + "," + myHexGrid.myGameBoard[row + 1][(col - myHexGrid.offsetAmount[row]) /*+ 1*/].GetComponent<HexCell>().col.ToString());
+                    NENeighbor = myHexGrid.myGameBoard[row + 1][(col - myHexGrid.offsetAmount[row]) /*+ 1*/];
+                    NENeighbor.gameObject.GetComponent<Renderer>().material = neighborMaterial;
+                }
+
+                else
+                {
+                    NENeighbor = null;
+                    print("(uneven)No NE neighbor!");
+                }
+
+                if ((myHexGrid.myGameBoard[row + 1][(col - myHexGrid.offsetAmount[row]) - 1] != null)) // NW neighbor check (is this even right??))
+                {
+                    print(row.ToString() + "," + col + "(uneven) NW neighbor: " + myHexGrid.myGameBoard[row + 1][(col - myHexGrid.offsetAmount[row]) - 1].GetComponent<HexCell>().row.ToString() + "," + myHexGrid.myGameBoard[row + 1][(col - myHexGrid.offsetAmount[row]) - 1].GetComponent<HexCell>().col.ToString());
+                    NWNeighbor = myHexGrid.myGameBoard[row + 1][(col - myHexGrid.offsetAmount[row]) - 1];
+                    NWNeighbor.gameObject.GetComponent<Renderer>().material = neighborMaterial;
+                }
+
+                else
+                {
+                    NWNeighbor = null;
+                    print("(uneven)No NW neighbor!");
+                }
+            }
+
+            print("There is a row over us.");
+        }
+        else if (myHexGrid.myGameBoard[row + 1] == null)
+            print("No row above us!");
+
+        if (myHexGrid.myGameBoard[row - 1] != null) // Check if there's a row under us.
+        {
+            if (row % 2 == 0) // Check SE, SW neighbors for even rows. Works as intended, AS LONG as the board isn't wonky. 
+            {
+                if (myHexGrid.myGameBoard[row - 1][(col - myHexGrid.offsetAmount[row])] != null) // SW neighbor check
+                {
+                    print(row.ToString() + "," + col + "(even) SW neighbor: " + myHexGrid.myGameBoard[row - 1][(col - myHexGrid.offsetAmount[row])].GetComponent<HexCell>().row.ToString() + ", " + myHexGrid.myGameBoard[row - 1][(col - myHexGrid.offsetAmount[row])].GetComponent<HexCell>().col.ToString());
+                    SWNeighbor = myHexGrid.myGameBoard[row - 1][(col - myHexGrid.offsetAmount[row])];
+                    SWNeighbor.gameObject.GetComponent<Renderer>().material = neighborMaterial;
+                }
+
+                else
+                {
+                    print("(even)No SW neighbor");
+                    SWNeighbor = null;
+                }
+
+                if (myHexGrid.myGameBoard[row - 1][(col - myHexGrid.offsetAmount[row]) + 1] != null)  // SE neighbor check
+                {
+                    print(row.ToString() + "," + col + "(even)SE neighbor: " + myHexGrid.myGameBoard[row - 1][(col - myHexGrid.offsetAmount[row]) + 1].GetComponent<HexCell>().row.ToString() + ", " + myHexGrid.myGameBoard[row - 1][(col - myHexGrid.offsetAmount[row] + 1)].GetComponent<HexCell>().col.ToString());
+                    SENeighbor = myHexGrid.myGameBoard[row - 1][(col - myHexGrid.offsetAmount[row]) + 1];
+                    SENeighbor.gameObject.GetComponent<Renderer>().material = neighborMaterial;
+
+                }
+
+                else
+                {
+                    print("(even)No SE neighbor");
+                    SENeighbor = null;
+                }
+            }
+
+            else if (row % 2 != 0) // Check SE, SW neighbors for uneven rows. Works as intended, as long as I fix the darn board.
+            {
+                if (myHexGrid.myGameBoard[row - 1][(col - myHexGrid.offsetAmount[row])/*+1*/] != null) // SW neighbor check (is this even right??)
+                {
+                    print(row.ToString() + "," + col + "(uneven) SW neighbor: " + myHexGrid.myGameBoard[row - 1][(col - myHexGrid.offsetAmount[row])/*+1*/].GetComponent<HexCell>().row.ToString() + "," + myHexGrid.myGameBoard[row - 1][(col - myHexGrid.offsetAmount[row]) /*+ 1*/].GetComponent<HexCell>().col.ToString());
+                    SWNeighbor = myHexGrid.myGameBoard[row - 1][(col - myHexGrid.offsetAmount[row]) /*+ 1*/];
+                    SWNeighbor.gameObject.GetComponent<Renderer>().material = neighborMaterial;
+                }
+
+                else
+                {
+                    SWNeighbor = null;
+                    print("(uneven)No SW neighbor!");
+                }
+
+                if ((myHexGrid.myGameBoard[row - 1][(col - myHexGrid.offsetAmount[row]) + 1] != null)) // SE neighbor check (is this even right??))
+                {
+                    print(row.ToString() + "," + col + "(uneven) SE neighbor: " + myHexGrid.myGameBoard[row - 1][(col - myHexGrid.offsetAmount[row]) + 1].GetComponent<HexCell>().row.ToString() + "," + myHexGrid.myGameBoard[row - 1][(col - myHexGrid.offsetAmount[row]) + 1].GetComponent<HexCell>().col.ToString());
+                    SENeighbor = myHexGrid.myGameBoard[row - 1][(col - myHexGrid.offsetAmount[row]) + 1];
+                    SENeighbor.gameObject.GetComponent<Renderer>().material = neighborMaterial;
+                }
+
+                else
+                {
+                    SENeighbor = null;
+                    print("(uneven)No SE neighbor!");
+                }
+
+                print("There is a row beneath us.");
+            }
+            else if (myHexGrid.myGameBoard[row - 1] == null) // No row beneath us.
+                print("No row beneath us!");
 
 
-
+        }
     }
 }

@@ -38,18 +38,24 @@ public class HexGrid : MonoBehaviour
 
     public int [] AmountOfStuff = new int[] { 1, 2, 3, 4, 13, 12, 11, 10, 9, 10, 11, 12, 13, 4, 3, 2, 1 };
     float[] xStartPositions = { 0f, -.5f, -1f, -1.5f, -6f, -5.5f, -5f, -4.5f, -4f, -4.5f, -5f, -5.5f, -6f, -1.5f, -1f, -.5f, -0f }; // Manually set where each row's start position on x. Could probably be made better.
-    public int[] offsetAmount = { 0, 0, -1, -1, -6, -5, -5, -4, -4, -4, -5, -5, -6, -1, -1, 0, 0 }; // Offset to somehow make the 0 column be in the middle
 
-
+    public int[] offsetAmount = { 0, 0, -1, -1, -6, -5, -5, -4, -4, -4, -5, -5, -6, -1, -1, 0, 0 };
     void Awake()
     {
-        for (int i = 0; i < 16; i++) // i = row
+        for (int i = 0; i < offsetAmount.Length; i++)
+        {
+            print(offsetAmount[i]);
+        }
+
+        for (int i = 0; i < height; i++) // i = row
         {
             myGameBoard[i] = new HexCell[AmountOfStuff[i]];
 
             for (int j = 0; j < AmountOfStuff[i]; j++) // j = position on row
             {
                 tempCell = Instantiate(cellPrefab, new Vector3(xStartPositions[i] + j, 0f, i), Quaternion.identity);
+                //print(i + " = i");
+                //print(offsetAmount[i] + "= offset[i]");
                 tempCell.row = i; tempCell.col = offsetAmount[i] + j;  // Need to translate index -> positions on gameboard, in order to find neighbors!
                 myGameBoard[i][j] = tempCell;
             }

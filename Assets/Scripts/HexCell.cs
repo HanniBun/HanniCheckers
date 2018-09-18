@@ -99,7 +99,7 @@ public class HexCell : MonoBehaviour
 
         else
         {
-           // print("No E neighbor");
+            // print("No E neighbor");
             ENeighbor = null;
         }
 

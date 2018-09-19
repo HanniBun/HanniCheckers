@@ -24,7 +24,7 @@ public class ClickerManager : MonoBehaviour {
 
             if (Physics.Raycast(ray, out hit) && hit.collider.gameObject.GetComponent<HexCell>() == true)
             {                  
-                print("Hello! My index is... " + hit.collider.gameObject.GetComponent<HexCell>().row.ToString() + "," + hit.collider.gameObject.GetComponent<HexCell>().col);
+                print("Hello! My index is... " + "row: " + hit.collider.gameObject.GetComponent<HexCell>().row.ToString() + ", col: " + hit.collider.gameObject.GetComponent<HexCell>().col);
                 //print("And my position in the world is..." + hit.collider.transform.position.ToString());
                 hit.collider.gameObject.GetComponent<HexCell>().WhoAreMyNeighbors();
                 hit.collider.gameObject.GetComponent<Renderer>().material = clickedMaterial;

@@ -5,60 +5,33 @@ using UnityEngine.UI;
 
 public class HexGrid : MonoBehaviour
 {
-    /*
-    0                  0
-    0                 0 *
-    1                * 0 *
-    1               * 0 * *
-    6      * * * * * * 0 * * * * * *
-    5       * * * * * 0 * * * * * *
-    5        * * * * * 0 * * * * *
-    4         * * * * 0 * * * * *
-    4          * * * * 0 * * * *
-    4         * * * * 0 * * * * *
-    5        * * * * * 0 * * * * *
-    5       * * * * * 0 * * * * * *
-    6      * * * * * * 0 * * * * * *
-    1               * 0 * *
-    1                * 0 *
-    0                 0 *
-    0                  0
-    */
-    // I could've used a matrix (which I have tried), but I found it tedious to set each "invalid" cell on the sides outside of the board (and that's, like, lots of them).
-    // Finding neighbors would be easier on a matrix though, since the indexes wouldn't be irregular in the shape of the gameboard.
+    [SerializeField] GameObject cellPrefab;
+    GameObject tempCell;
 
-    // ****************************************************************************************
+    const int rows = 17, columns = 13;
 
-    public HexCell cellPrefab;
-    [SerializeField]
-    HexCell tempCell;
+    HexCell [,] myGameBoard = new HexCell[rows, columns];
+    public Material[] cellColors = new Material[6]; // Material for our HexCells. Maybe move this to some sort of HexGrid Controller script later?
 
-    const int width = 13; const int height = 17; // Used in making the myGameBoard.
-    public HexCell[][] myGameBoard = new HexCell[height][];
-
-    public int [] AmountOfStuff = new int[] { 1, 2, 3, 4, 13, 12, 11, 10, 9, 10, 11, 12, 13, 4, 3, 2, 1 };
-    float[] xStartPositions = { 0f, -.5f, -1f, -1.5f, -6f, -5.5f, -5f, -4.5f, -4f, -4.5f, -5f, -5.5f, -6f, -1.5f, -1f, -.5f, -0f }; // Manually set where each row's start position on x. Could probably be made better.
-
-    //public int[] newOffsetAmount = { 0, 0, -1, -1, -6, -5, -5, -4, -4, -4, -5, -5, -6, -1, -1, 0, 0 };
-
-    public int[] newOffsetAmount = { 0, 0, -1, -1, -6, -5, -5, -4, -4, -4, -5, -5, -6, -1, -1, 0, 0 };
-    void Awake()
+    void Start()
     {
-        print(AmountOfStuff.Length);
-        //for (int i = 0; i < newOffsetAmount.Length; i++)
-        //{
-        //    print(newOffsetAmount[i]);
-        //}
-
-        for (int i = 0; i < height; i++) // i = row
+        for (int i = 0; i < rows; i++)
         {
-            myGameBoard[i] = new HexCell[AmountOfStuff[i]];
-
-            for (int j = 0; j < AmountOfStuff[i]; j++) // j = position on row
+            for (int j = 0; j < columns; j++)
             {
-                tempCell = Instantiate(cellPrefab, new Vector3(xStartPositions[i] + j, 0f, i), Quaternion.identity);
-                tempCell.row = i; tempCell.col = newOffsetAmount[i] + j;  // Need to translate index -> positions on gameboard, in order to find neighbors!
-                myGameBoard[i][j] = tempCell;
+                if (i % 2 == 0)
+                {
+                    tempCell = Instantiate(cellPrefab, new Vector3(0.865f + j * 1.73f, 0, i * 1f), transform.rotation);
+                }
+                else
+                {
+                    tempCell = Instantiate(cellPrefab, new Vector3(j * 1.73f, 0, i * 1f), transform.rotation);
+                }
+                tempCell.GetComponent<HexCell>().row = i;
+                tempCell.GetComponent<HexCell>().col = j;
+                myGameBoard[i, j] = tempCell.GetComponent<HexCell>();
+
+                tempCell.GetComponent<HexCell>().myCellState = HexCell.cellState.blue;
             }
         }
     }

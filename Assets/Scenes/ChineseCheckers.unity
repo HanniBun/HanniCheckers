@@ -361,10 +361,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4cce63e9d4340b4b8bcdb6c456ac4aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cellPrefab: {fileID: 114194377874669244, guid: 54f09f211371d384f81a88943164296a,
-    type: 2}
-  tempCell: {fileID: 0}
-  offsetAmount: 0000000000000000fffffffffffffffffafffffffbfffffffbfffffffcfffffffcfffffffbfffffffbfffffffaffffffffffffffffffffff0000000000000000
+  cellPrefab: {fileID: 1170160761903522, guid: 54f09f211371d384f81a88943164296a, type: 2}
+  cellColors:
+  - {fileID: 2100000, guid: 9d9e216e31d36dd45ab945dac258035e, type: 2}
+  - {fileID: 2100000, guid: 238682fceaa327d458229f7f76c7bf1c, type: 2}
+  - {fileID: 2100000, guid: 7a4d18bfa9e05844495b1a4503a43a0a, type: 2}
+  - {fileID: 2100000, guid: 7e8221d74bd17de4faca63db16143b66, type: 2}
+  - {fileID: 2100000, guid: 5b7f2707c84fc9442b33e534e0a58eb7, type: 2}
+  - {fileID: 2100000, guid: af28d243496131b4ebeba408d60914f3, type: 2}
 --- !u!4 &1457769414
 Transform:
   m_ObjectHideFlags: 0

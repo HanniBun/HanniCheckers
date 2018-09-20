@@ -8,7 +8,7 @@ public class HexCell : MonoBehaviour
 {
     [SerializeField]
     HexGridController myGridController;  // Used to reach the materials for the cells!
-    public enum cellState { invalid, empty, blue, green, orange, purple, red, yellow, }; // Invalid is the default, that's why it's the first index.
+    public enum cellState { invalid, empty, blue, green, orange, purple, red, yellow, };
 
     public cellState myCellState { get; set; }
 
@@ -19,44 +19,47 @@ public class HexCell : MonoBehaviour
 
     [SerializeField]
     private int _row, _col; // So that we can see the rows and col in the Inspector.
-    public int row { get { return _row; } set { _row = value; } }   // Used so that each cell knows its "address",
-    public int col { get { return _col; } set { _col = value; } }   //i.e. its index in the myGameboard[,].
+    public int row { get { return _row; } set { _row = value; } }   
+    public int col { get { return _col; } set { _col = value; } }   // I'm not entirely sure these are necessary, but I'm leaving them as they are for now.
 
 
     private void Start()
     {
-        myGridController = FindObjectOfType<HexGridController>(); // Maybe not use Find? There is always only one controller object.
+        myGridController = FindObjectOfType<HexGridController>(); // Maybe not use Find? There is always only one controller object. 
 
-        ColorCheck(myCellState); // does a color check on start, and sets the cell accordingly.
-        //print("my cell state is " + myCellState);
+        ColorCheck(); // does a color check on start, and "sets" the cell accordingly with the right color, and if it's clickable or not.
     }
 
-    void ColorCheck(cellState myColor)
+    public void ColorCheck()
     {
-        switch (myColor)
+        switch (myCellState)
         {
             case cellState.invalid:
                 {
-                    clickableCell = false;
+                    clickableCell = true; // Okay, this is supposed to be false, but for the sake of moving around, I've changed it to true for now.
+
+                    this.GetComponent<Renderer>().material = myGridController.cellColors[6];
+
                     //this.gameObject.SetActive(false); // sets invalid HexCells to not active. I wonder how this affects the myGameboard array? Are they still in there or are their indexes set to null somehow?
                     return;
                 }
 
             case cellState.empty:
                 {
-                    clickableCell = false; // set this to true if a neighbor?
+                    clickableCell = false; // set this to true if a neighbor. (via ClickerManager -> HexGridController)
                     return;
                 }
 
             case cellState.blue:
                 {
-                    this.GetComponent<Renderer>().material = myGridController.cellColors[0]; // Sets this cell to a lovely blue color.
+                    this.GetComponent<Renderer>().material = myGridController.cellColors[0];
+                    print("I have become bluuuue");
                     clickableCell = true;
                     return;
                 }
             case cellState.green:
                 {
-                    this.GetComponent<Renderer>().material = myGridController.cellColors[1]; // And so on.
+                    this.GetComponent<Renderer>().material = myGridController.cellColors[1]; 
                     clickableCell = true;
                     return;
                 }

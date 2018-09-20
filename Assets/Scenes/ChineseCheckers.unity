@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -268,9 +268,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f10eb2043d353549bda0051f757ac1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myHexgridController: {fileID: 1457769415}
   startClickedCell: {fileID: 0}
   goalClickedCell: {fileID: 0}
-  myHexgridController: {fileID: 1457769415}
   clickedMaterial: {fileID: 2100000, guid: 9d7b2e165a45c5646b7ee47aa927118a, type: 2}
 --- !u!1 &1169962336
 GameObject:
@@ -397,6 +397,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 7e8221d74bd17de4faca63db16143b66, type: 2}
   - {fileID: 2100000, guid: 5b7f2707c84fc9442b33e534e0a58eb7, type: 2}
   - {fileID: 2100000, guid: af28d243496131b4ebeba408d60914f3, type: 2}
+  - {fileID: 2100000, guid: c378e2865afaf184a9df9f23045dde55, type: 2}
 --- !u!1 &1778046263
 GameObject:
   m_ObjectHideFlags: 0

@@ -46,7 +46,7 @@ public class ClickerManager : MonoBehaviour
 
                     startClickedCell.pickedUp = true; // Pick it up! 
                     pickedUpCell = true;
-                    //myHexgridController.AllNeighborCheck(startClickedCell.row, startClickedCell.col);  // Check for neighbors! (WORK IN PROGRESS)
+                    myHexgridController.AllNeighborCheck(startClickedCell.row, startClickedCell.col);  // Check for neighbors! (WORK IN PROGRESS)
                     hit.collider.gameObject.GetComponent<Renderer>().material = clickedMaterial;
                     print("I have been picked up!");
                 }
@@ -54,14 +54,15 @@ public class ClickerManager : MonoBehaviour
               else if (pickedUpCell == true) // If we HAVE picked up a cell...
             {
                 goalClickedCell = hit.collider.gameObject.GetComponent<HexCell>();
-                    if (goalClickedCell.myCellState == HexCell.cellState.invalid) // Yeah, they're invalid right now BUT clickable. For the sake of testing movement.
-                                                                                  // Gonna change this later so that you only can move to neighbors that are valid.
+                    if (myHexgridController.allMyNeighbors.Contains(goalClickedCell)) 
+                                                                                  
                     {                                                                  // Note to self: check neighbors of StartCell, see if goalClickedCell is one of them? Or if it's just clickable?
                         print("You can move here.");
+                        myHexgridController.allMyNeighbors.Clear(); // Empties the list when you place new cell down.
 
                         goalClickedCell.myCellState = startClickedCell.myCellState;
                                       
-                        startClickedCell.myCellState = HexCell.cellState.invalid;
+                        startClickedCell.myCellState = HexCell.cellState.empty;
 
                         print("Startcell state is now " + startClickedCell.myCellState);
                         print("Goalcell state is now " + goalClickedCell.myCellState);

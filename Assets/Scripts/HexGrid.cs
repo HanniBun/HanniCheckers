@@ -48,7 +48,10 @@ public class HexGrid : MonoBehaviour
         }
 
         myGameBoard[7, 6].GetComponent<HexCell>().myCellState = HexCell.cellState.blue; // For trying movement on the board.
-        //myGameBoard[7, 7].GetComponent<HexCell>().myCellState = HexCell.cellState.empty;
-        //myGameBoard[7, 5].GetComponent<HexCell>().myCellState = HexCell.cellState.empty;
+        myGameBoard[7, 7].GetComponent<HexCell>().myCellState = HexCell.cellState.empty;
+        myGameBoard[7, 5].GetComponent<HexCell>().myCellState = HexCell.cellState.empty;
+        myGameBoard[8, 6].GetComponent<HexCell>().myCellState = HexCell.cellState.empty;
     }
+
+
     }

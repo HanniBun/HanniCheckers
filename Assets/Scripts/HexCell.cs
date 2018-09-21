@@ -36,16 +36,14 @@ public class HexCell : MonoBehaviour
         {
             case cellState.invalid:
                 {
-                    clickableCell = true; // Okay, this is supposed to be false, but for the sake of moving around, I've changed it to true for now.
-
-                    this.GetComponent<Renderer>().material = myGridController.cellColors[6];
-
-                    //this.gameObject.SetActive(false); // sets invalid HexCells to not active. I wonder how this affects the myGameboard array? Are they still in there or are their indexes set to null somehow?
+                    clickableCell = false;
+                    this.gameObject.SetActive(false); // sets invalid HexCells to not active. I wonder how this affects the myGameboard array? Are they still in there or are their indexes set to null somehow?
                     return;
                 }
 
             case cellState.empty:
                 {
+                    this.GetComponent<Renderer>().material = myGridController.cellColors[6];
                     clickableCell = false; // set this to true if a neighbor. (via ClickerManager -> HexGridController)
                     return;
                 }

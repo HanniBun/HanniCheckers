@@ -398,6 +398,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 5b7f2707c84fc9442b33e534e0a58eb7, type: 2}
   - {fileID: 2100000, guid: af28d243496131b4ebeba408d60914f3, type: 2}
   - {fileID: 2100000, guid: c378e2865afaf184a9df9f23045dde55, type: 2}
+  allMyNeighbors: []
 --- !u!1 &1778046263
 GameObject:
   m_ObjectHideFlags: 0

@@ -23,6 +23,29 @@ public class HexGrid : MonoBehaviour
 
     public HexCell [,] myGameBoard = new HexCell[rows, columns];
 
+    public enum state { invalid, empty, blue, purple, green, orange, yellow, red};
+
+    state [,] States = new state[17, 13]  // To eventually use when SETTING the board itself (i.e. after creating it?)
+{
+        { state.invalid, state.invalid, state.invalid, state.invalid, state.invalid, state.invalid, state.blue, state.invalid, state.invalid, state.invalid, state.invalid, state.invalid, state.invalid },
+        { state.invalid, state.invalid, state.invalid, state.invalid, state.invalid, state.invalid, state.blue, state.blue, state.invalid, state.invalid, state.invalid, state.invalid, state.invalid },
+        { state.invalid, state.invalid, state.invalid, state.invalid, state.invalid, state.blue, state.blue, state.blue, state.invalid, state.invalid, state.invalid, state.invalid, state.invalid },
+        { state.invalid, state.invalid, state.invalid, state.invalid, state.invalid, state.blue, state.blue, state.blue, state.blue, state.invalid, state.invalid, state.invalid, state.invalid },
+        {state.purple, state.purple, state.purple, state.purple, state.empty, state.empty, state.empty, state.empty, state.empty, state.green, state.green, state.green, state.green },
+        {state.invalid, state.purple, state.purple, state.purple, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.green, state.green, state.green },
+        {state.invalid, state.purple, state.purple, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.green, state.green, state.invalid },
+        {state.invalid, state.invalid, state.purple, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.green, state.invalid },
+        {state.invalid, state.invalid, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.invalid, state.invalid },
+        {state.invalid, state.invalid, state.orange, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.yellow, state.invalid },
+        {state.invalid, state.orange, state.orange, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.yellow, state.yellow, state.invalid },
+        {state.invalid, state.orange, state.orange, state.orange, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.yellow, state.yellow, state.yellow },
+        {state.orange, state.orange, state.orange, state.orange, state.empty, state.empty, state.empty, state.empty, state.empty, state.yellow, state.yellow, state.yellow, state.yellow },
+        {state.invalid, state.invalid, state.invalid, state.invalid, state.invalid, state.red, state.red, state.red, state.red, state.invalid, state.invalid, state.invalid, state.invalid },
+        {state.invalid, state.invalid, state.invalid, state.invalid, state.invalid, state.red, state.red, state.red, state.invalid, state.invalid, state.invalid, state.invalid, state.invalid },
+        {state.invalid, state.invalid, state.invalid, state.invalid, state.invalid, state.invalid, state.red, state.red, state.invalid, state.invalid, state.invalid, state.invalid, state.invalid },
+        {state.invalid, state.invalid, state.invalid, state.invalid, state.invalid, state.invalid, state.red, state.invalid, state.invalid, state.invalid, state.invalid, state.invalid, state.invalid }
+    };
+
     void Start()
     {
         for (int i = 0; i < rows; i++)
@@ -38,8 +61,8 @@ public class HexGrid : MonoBehaviour
                     tempCell = Instantiate(cellPrefab, new Vector3(j * 1.73f, 0, i * 1f), transform.rotation);
                 }
 
-                tempCell.GetComponent<HexCell>().myCellState = HexCell.cellState.invalid; // Default value is invalid. Note to self: Make an array of states maybe?
-
+                //tempCell.GetComponent<HexCell>().myCellState = HexCell.cellState.empty; // Default value is invalid. Note to self: Make an array of states maybe?
+                tempCell.GetComponent<HexCell>().myCellState = States[i, j]; // Gets its state from the array.
                 tempCell.GetComponent<HexCell>().row = i;
                 tempCell.GetComponent<HexCell>().col = j;
  
@@ -47,10 +70,11 @@ public class HexGrid : MonoBehaviour
             }
         }
 
-        myGameBoard[7, 6].GetComponent<HexCell>().myCellState = HexCell.cellState.blue; // For trying movement on the board.
-        myGameBoard[7, 7].GetComponent<HexCell>().myCellState = HexCell.cellState.empty;
-        myGameBoard[7, 5].GetComponent<HexCell>().myCellState = HexCell.cellState.empty;
-        myGameBoard[8, 6].GetComponent<HexCell>().myCellState = HexCell.cellState.empty;
+        //myGameBoard[7, 6].GetComponent<HexCell>().myCellState = HexCell.cellState.blue; // For trying movement on the board.
+        //myGameBoard[8, 4].GetComponent<HexCell>().myCellState = HexCell.cellState.blue;
+        //myGameBoard[7, 7].GetComponent<HexCell>().myCellState = HexCell.cellState.empty;
+        //myGameBoard[7, 5].GetComponent<HexCell>().myCellState = HexCell.cellState.empty;
+        //myGameBoard[8, 6].GetComponent<HexCell>().myCellState = HexCell.cellState.empty;
     }
 
 

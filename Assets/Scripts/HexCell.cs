@@ -10,7 +10,7 @@ public class HexCell : MonoBehaviour
     HexGridController myGridController;  // Used to reach the materials for the cells!
     public enum cellState { invalid, empty, blue, green, orange, purple, red, yellow, };
 
-    public cellState myCellState { get; set; }
+    public HexGrid.state myCellState { get; set; }
 
     public bool clickableCell;
     public bool pickedUp;
@@ -34,53 +34,53 @@ public class HexCell : MonoBehaviour
     {
         switch (myCellState)
         {
-            case cellState.invalid:
+            case HexGrid.state.invalid:
                 {
                     clickableCell = false;
                     this.gameObject.SetActive(false); // sets invalid HexCells to not active. I wonder how this affects the myGameboard array? Are they still in there or are their indexes set to null somehow?
                     return;
                 }
 
-            case cellState.empty:
+            case HexGrid.state.empty:
                 {
                     this.GetComponent<Renderer>().material = myGridController.cellColors[6];
                     clickableCell = false; // set this to true if a neighbor. (via ClickerManager -> HexGridController)
                     return;
                 }
 
-            case cellState.blue:
+            case HexGrid.state.blue:
                 {
                     this.GetComponent<Renderer>().material = myGridController.cellColors[0];
                     print("I have become bluuuue");
                     clickableCell = true;
                     return;
                 }
-            case cellState.green:
+            case HexGrid.state.green:
                 {
                     this.GetComponent<Renderer>().material = myGridController.cellColors[1]; 
                     clickableCell = true;
                     return;
                 }
-            case cellState.orange:
+            case HexGrid.state.orange:
                 {
                     this.GetComponent<Renderer>().material = myGridController.cellColors[2];
                     clickableCell = true;
                     return;
                 }
-            case cellState.purple:
+            case HexGrid.state.purple:
                 {
                     this.GetComponent<Renderer>().material = myGridController.cellColors[3];
                     clickableCell = true;
                     return;
                 }
-            case cellState.red:
+            case HexGrid.state.red:
                 {
                     this.GetComponent<Renderer>().material = myGridController.cellColors[4];
                     clickableCell = true;
                     return;
                 }
 
-            case cellState.yellow:
+            case HexGrid.state.yellow:
                 {
                     this.GetComponent<Renderer>().material = myGridController.cellColors[5];
                     clickableCell = true;

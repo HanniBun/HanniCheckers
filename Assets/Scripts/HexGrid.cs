@@ -31,10 +31,10 @@ public class HexGrid : MonoBehaviour
         { state.invalid, state.invalid, state.invalid, state.invalid, state.invalid, state.invalid, state.blue, state.blue, state.invalid, state.invalid, state.invalid, state.invalid, state.invalid },
         { state.invalid, state.invalid, state.invalid, state.invalid, state.invalid, state.blue, state.blue, state.blue, state.invalid, state.invalid, state.invalid, state.invalid, state.invalid },
         { state.invalid, state.invalid, state.invalid, state.invalid, state.invalid, state.blue, state.blue, state.blue, state.blue, state.invalid, state.invalid, state.invalid, state.invalid },
-        {state.purple, state.purple, state.purple, state.purple, state.empty, state.empty, state.empty, state.empty, state.empty, state.green, state.green, state.green, state.green },
-        {state.invalid, state.purple, state.purple, state.purple, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.green, state.green, state.green },
-        {state.invalid, state.purple, state.purple, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.green, state.green, state.invalid },
-        {state.invalid, state.invalid, state.purple, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.green, state.invalid },
+        {state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty },
+        {state.invalid, state.purple, state.purple, state.purple, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty },
+        {state.invalid, state.purple, state.purple, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.invalid },
+        {state.invalid, state.invalid, state.purple, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.invalid },
         {state.invalid, state.invalid, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.invalid, state.invalid },
         {state.invalid, state.invalid, state.orange, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.yellow, state.invalid },
         {state.invalid, state.orange, state.orange, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.yellow, state.yellow, state.invalid },
@@ -61,8 +61,8 @@ public class HexGrid : MonoBehaviour
                     tempCell = Instantiate(cellPrefab, new Vector3(j * 1.73f, 0, i * 1f), transform.rotation);
                 }
 
-                //tempCell.GetComponent<HexCell>().myCellState = HexCell.cellState.empty; // Default value is invalid. Note to self: Make an array of states maybe?
-                tempCell.GetComponent<HexCell>().myCellState = States[i, j]; // Gets its state from the array.
+                tempCell.GetComponent<HexCell>().myCellState = state.empty; // 
+                //tempCell.GetComponent<HexCell>().myCellState = States[i, j]; // Gets its state from the array.
                 tempCell.GetComponent<HexCell>().row = i;
                 tempCell.GetComponent<HexCell>().col = j;
  

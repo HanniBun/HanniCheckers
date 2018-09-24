@@ -55,7 +55,7 @@ public class HexCell : MonoBehaviour
                     clickableCell = true;
                     return;
                 }
-            case HexGrid.state.green:
+            case HexGrid.state.empty:
                 {
                     this.GetComponent<Renderer>().material = myGridController.cellColors[1]; 
                     clickableCell = true;

@@ -8,14 +8,13 @@ public class HexCell : MonoBehaviour
 {
     [SerializeField]
     HexGridController myGridController;  // Used to reach the materials for the cells!
-    public enum cellState { invalid, empty, blue, green, orange, purple, red, yellow, };
 
     public HexGrid.state myCellState { get; set; }
 
     public bool clickableCell;
     public bool pickedUp;
 
-    struct Coordinates { int row; int col; }  // Instead of using raycast, use coordinates? This can be made into a list as well. Neat!
+    //struct Coordinates { int row; int col; }  // Instead of using raycast, use coordinates? This can be made into a list as well. Neat!
 
     [SerializeField]
     private int _row, _col; // So that we can see the rows and col in the Inspector.
@@ -25,7 +24,7 @@ public class HexCell : MonoBehaviour
 
     private void Start()
     {
-        myGridController = FindObjectOfType<HexGridController>(); // Maybe not use Find? There is always only one controller object. 
+        myGridController = GetComponentInParent<HexGridController>();
 
         ColorCheck(); // does a color check on start, and "sets" the cell accordingly with the right color, and if it's clickable or not.
     }
@@ -37,7 +36,7 @@ public class HexCell : MonoBehaviour
             case HexGrid.state.invalid:
                 {
                     clickableCell = false;
-                    this.gameObject.SetActive(false); // sets invalid HexCells to not active. I wonder how this affects the myGameboard array? Are they still in there or are their indexes set to null somehow?
+                    this.gameObject.SetActive(false);
                     return;
                 }
 
@@ -51,11 +50,10 @@ public class HexCell : MonoBehaviour
             case HexGrid.state.blue:
                 {
                     this.GetComponent<Renderer>().material = myGridController.cellColors[0];
-                    print("I have become bluuuue");
                     clickableCell = true;
                     return;
                 }
-            case HexGrid.state.empty:
+            case HexGrid.state.green:
                 {
                     this.GetComponent<Renderer>().material = myGridController.cellColors[1]; 
                     clickableCell = true;

@@ -5,11 +5,17 @@ using UnityEngine;
 public class HexGridController : MonoBehaviour {
     // Note to self: Change void into something that returns a value when possible.
 
+    // *******************************
+    // Neighborchecks methods are taken directly from a classmate's code but changed since I don't use "jumping" over occupied cells yet.
+    // I really should rename this script to "NeighborController" or something like that.
+
 
     [SerializeField]
     HexGrid myHexGrid;
 
     public Material[] cellColors = new Material[7]; // Material for the HexCells. 
+    [SerializeField]
+    Material cellHighlightColor;
 
     public List<HexCell> allMyNeighbors = new List<HexCell>();   // Temporary list that is supposed to be made every time a movable cell is clicked.
                                                                  //  Somehow reach this list from ClickerManager. Or maybe actually have the list there instead.
@@ -26,6 +32,7 @@ public class HexGridController : MonoBehaviour {
         foreach (HexCell neighbors in allMyNeighbors)
         {
             neighbors.clickableCell = true; // Neighbors are clickable.
+            //neighbors.gameObject.GetComponent<Renderer>().material = cellHighlightColor;
         }
     }
 
@@ -64,7 +71,7 @@ public class HexGridController : MonoBehaviour {
         }
     }
 
-    public void NENeighborCheck(int row, int column /*bool hasJumped*/) // Maybe change Neighbor to Move?
+    public void NENeighborCheck(int row, int column /*bool hasJumped*/)
     {
         if (row % 2 == 0)
         {

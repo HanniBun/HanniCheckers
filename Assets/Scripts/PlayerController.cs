@@ -5,29 +5,40 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
 
-    [SerializeField]
-    Button twoPlayersButton, fourPlayersButton, fivePlayersButton, sixPlayersButton;
+    //[SerializeField]
+    //Button twoPlayersButton, fourPlayersButton, fivePlayersButton, sixPlayersButton;
 
-    void twoPlayersClicked()
+    SceneController mySceneController;
+
+    private void Start()
     {
-        PlayerPrefs.SetInt("PlayerAmount", 2);
-        //... load set amount on board, change camera to game
+        mySceneController = this.GetComponent<SceneController>();
+
     }
 
-    void fourPlayersClicked()
+    public void twoPlayersClicked()
+    {
+        PlayerPrefs.SetInt("PlayerAmount", 2); // The playerpref PlayerAmount is to be used when loading the board itself: how the states are depends on how many players there are.
+        //... load set amount on board, change camera to game
+        mySceneController.SceneChange();
+    }
+
+    public void threePlayersClicked()
+    {
+        PlayerPrefs.SetInt("PlayerAmount", 3);
+        mySceneController.SceneChange();
+    }
+
+    public void fourPlayersClicked()
     {
         PlayerPrefs.SetInt("PlayerAmount", 4);
+        mySceneController.SceneChange();
     }
 
-    void fivePlayersClicked()
-    {
-        PlayerPrefs.SetInt("PlayerAmount", 5);
-    }
-
-    void sixPlayersClicked()
+    public void sixPlayersClicked()
     {
         PlayerPrefs.SetInt("PlayerAmount", 6);
+        mySceneController.SceneChange();
     }
-
 
 }

@@ -11,6 +11,8 @@ public class HexGrid : MonoBehaviour
 
     public HexCell [,] myGameBoard = new HexCell[rows, columns];
 
+    StateController myStateController;
+
     public enum state { invalid, empty, blue, purple, green, orange, yellow, red};
 
     state [,] States = new state[17, 13]  // Each cell's state on the board. Changes depending on how many players (PlayerPref "PlayerAmount").
@@ -36,6 +38,7 @@ public class HexGrid : MonoBehaviour
 
     void Start()
     {
+        myStateController = this.GetComponent<StateController>();
         StateSetup(PlayerPrefs.GetInt("PlayerAmount"));
 
         for (int i = 0; i < rows; i++)
@@ -52,7 +55,7 @@ public class HexGrid : MonoBehaviour
                 }
                 tempCell.transform.parent = this.transform; // Makes it not so cluttered in the hierarchy. Yay, structure!
 
-                tempCell.GetComponent<HexCell>().myCellState = States[i, j]; // Gets its state from the array.
+                tempCell.GetComponent<HexCell>().myCellState = myStateController.States[i, j]; // Gets its state from the array.
                 tempCell.GetComponent<HexCell>().row = i;
                 tempCell.GetComponent<HexCell>().col = j;
  

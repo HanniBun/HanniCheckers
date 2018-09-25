@@ -9,7 +9,8 @@ public class HexCell : MonoBehaviour
     [SerializeField]
     HexGridController myGridController;  // Used to reach the materials for the cells!
 
-    public HexGrid.state myCellState { get; set; }
+
+    public StateController.state myCellState { get; set; }
 
     public bool clickableCell;
     public bool pickedUp;
@@ -33,52 +34,52 @@ public class HexCell : MonoBehaviour
     {
         switch (myCellState)
         {
-            case HexGrid.state.invalid:
+            case StateController.state.invalid:
                 {
                     clickableCell = false;
                     this.gameObject.SetActive(false);
                     return;
                 }
 
-            case HexGrid.state.empty:
+            case StateController.state.empty:
                 {
                     this.GetComponent<Renderer>().material = myGridController.cellColors[6];
                     clickableCell = false; // set this to true if a neighbor. (via ClickerManager -> HexGridController)
                     return;
                 }
 
-            case HexGrid.state.blue:
+            case StateController.state.blue:
                 {
                     this.GetComponent<Renderer>().material = myGridController.cellColors[0];
                     clickableCell = true;
                     return;
                 }
-            case HexGrid.state.green:
+            case StateController.state.green:
                 {
                     this.GetComponent<Renderer>().material = myGridController.cellColors[1]; 
                     clickableCell = true;
                     return;
                 }
-            case HexGrid.state.orange:
+            case StateController.state.orange:
                 {
                     this.GetComponent<Renderer>().material = myGridController.cellColors[2];
                     clickableCell = true;
                     return;
                 }
-            case HexGrid.state.purple:
+            case StateController.state.purple:
                 {
                     this.GetComponent<Renderer>().material = myGridController.cellColors[3];
                     clickableCell = true;
                     return;
                 }
-            case HexGrid.state.red:
+            case StateController.state.red:
                 {
                     this.GetComponent<Renderer>().material = myGridController.cellColors[4];
                     clickableCell = true;
                     return;
                 }
 
-            case HexGrid.state.yellow:
+            case StateController.state.yellow:
                 {
                     this.GetComponent<Renderer>().material = myGridController.cellColors[5];
                     clickableCell = true;

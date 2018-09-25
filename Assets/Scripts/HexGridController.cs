@@ -38,7 +38,7 @@ public class HexGridController : MonoBehaviour {
 
     void ENeighborCheck(int row, int col)
     {
-        if (myHexGrid.myGameBoard[row, col + 1].myCellState == HexGrid.state.empty)
+        if (myHexGrid.myGameBoard[row, col + 1].myCellState == StateController.state.empty)
         {
             print("There's an empty spot to our right");
             allMyNeighbors.Add(myHexGrid.myGameBoard[row, col + 1]); // added to list!
@@ -56,12 +56,12 @@ public class HexGridController : MonoBehaviour {
 
     void WNeighborCheck(int row, int col)
     {
-        if (myHexGrid.myGameBoard[row, col - 1].myCellState == HexGrid.state.empty)
+        if (myHexGrid.myGameBoard[row, col - 1].myCellState == StateController.state.empty)
         {
             print("There's an empty spot to our left!");
             allMyNeighbors.Add(myHexGrid.myGameBoard[row, col - 1]); // added to list!
         }
-        if (myHexGrid.myGameBoard[row, col - 1].myCellState != HexGrid.state.empty || myHexGrid.myGameBoard[row, col - 1].clickableCell == true)
+        if (myHexGrid.myGameBoard[row, col - 1].myCellState != StateController.state.empty || myHexGrid.myGameBoard[row, col - 1].clickableCell == true)
         {
             print("Hey, there's someone to the left.");
         }
@@ -75,7 +75,7 @@ public class HexGridController : MonoBehaviour {
     {
         if (row % 2 == 0)
         {
-            if (myHexGrid.myGameBoard[row + 1, column + 1].myCellState == HexGrid.state.empty /*&& !matris[row, column].validMove && !hasJumped*/)
+            if (myHexGrid.myGameBoard[row + 1, column + 1].myCellState == StateController.state.empty /*&& !matris[row, column].validMove && !hasJumped*/)
             {
                 allMyNeighbors.Add(myHexGrid.myGameBoard[row + 1, column + 1]);
             }
@@ -87,7 +87,7 @@ public class HexGridController : MonoBehaviour {
         }
         else
         {
-            if (myHexGrid.myGameBoard[row + 1, column].myCellState == HexGrid.state.empty /*&& !matris[row, column].validMove && !hasJumped*/)
+            if (myHexGrid.myGameBoard[row + 1, column].myCellState == StateController.state.empty /*&& !matris[row, column].validMove && !hasJumped*/)
             {
                 allMyNeighbors.Add(myHexGrid.myGameBoard[row + 1, column]);
             }
@@ -103,7 +103,7 @@ public class HexGridController : MonoBehaviour {
     {
         if (row % 2 == 0) // Even rows
         {
-            if (myHexGrid.myGameBoard[row + 1, column].myCellState == HexGrid.state.empty) // If the row over us is empty...
+            if (myHexGrid.myGameBoard[row + 1, column].myCellState == StateController.state.empty) // If the row over us is empty...
             {
                 allMyNeighbors.Add(myHexGrid.myGameBoard[row + 1, column]); // Add as neighbor.
             }
@@ -121,7 +121,7 @@ public class HexGridController : MonoBehaviour {
         }
         else // uneven rows
         {
-            if (myHexGrid.myGameBoard[row + 1, column - 1].myCellState == HexGrid.state.empty)
+            if (myHexGrid.myGameBoard[row + 1, column - 1].myCellState == StateController.state.empty)
             {
                 allMyNeighbors.Add(myHexGrid.myGameBoard[row + 1, column - 1]);
             }
@@ -142,7 +142,7 @@ public class HexGridController : MonoBehaviour {
     {
         if (row % 2 == 0) //even rows
         {
-            if (myHexGrid.myGameBoard[row - 1, column + 1].myCellState == HexGrid.state.empty)
+            if (myHexGrid.myGameBoard[row - 1, column + 1].myCellState == StateController.state.empty)
             {
                 allMyNeighbors.Add(myHexGrid.myGameBoard[row - 1, column + 1]);
             }
@@ -158,7 +158,7 @@ public class HexGridController : MonoBehaviour {
         }
         else
         {
-            if (myHexGrid.myGameBoard[row - 1, column].myCellState == HexGrid.state.empty)
+            if (myHexGrid.myGameBoard[row - 1, column].myCellState == StateController.state.empty)
                 allMyNeighbors.Add(myHexGrid.myGameBoard[row - 1, column]);
 
             else
@@ -176,7 +176,7 @@ public class HexGridController : MonoBehaviour {
     {
         if (row % 2 == 0)
         {
-            if (myHexGrid.myGameBoard[row - 1, column].myCellState == HexGrid.state.empty)
+            if (myHexGrid.myGameBoard[row - 1, column].myCellState == StateController.state.empty)
             {
                 allMyNeighbors.Add(myHexGrid.myGameBoard[row - 1, column]);
             }
@@ -193,7 +193,7 @@ public class HexGridController : MonoBehaviour {
         }
         else
         {
-            if (myHexGrid.myGameBoard[row - 1, column - 1].myCellState == HexGrid.state.empty)
+            if (myHexGrid.myGameBoard[row - 1, column - 1].myCellState == StateController.state.empty)
             {
                 allMyNeighbors.Add(myHexGrid.myGameBoard[row - 1, column - 1]);
             }

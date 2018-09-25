@@ -6,7 +6,7 @@ public class StateController : MonoBehaviour
 {
     public enum state { invalid, empty, blue, purple, green, orange, yellow, red };
 
-    state[,] States = new state[17, 13]  // Each cell's state on the board. Changes depending on how many players (PlayerPref "PlayerAmount").
+    public state[,] States = new state[17, 13]  // Each cell's state on the board. Changes depending on how many players (PlayerPref "PlayerAmount").
 {
         { state.invalid, state.invalid, state.invalid, state.invalid, state.invalid, state.invalid, state.blue, state.invalid, state.invalid, state.invalid, state.invalid, state.invalid, state.invalid },
         { state.invalid, state.invalid, state.invalid, state.invalid, state.invalid, state.invalid, state.blue, state.blue, state.invalid, state.invalid, state.invalid, state.invalid, state.invalid },

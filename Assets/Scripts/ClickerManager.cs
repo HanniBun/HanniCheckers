@@ -38,7 +38,7 @@ public class ClickerManager : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit) && hit.collider.gameObject.GetComponent<HexCell>() == true) // If we click on a cell...
             {
-                if (pickedUpCell == false && hit.collider.gameObject.GetComponent<HexCell>().myCellState != HexGrid.state.invalid && hit.collider.gameObject.GetComponent<HexCell>().myCellState != HexGrid.state.empty) // if we haven't picked up a cell and the clicked one contains something...
+                if (pickedUpCell == false && hit.collider.gameObject.GetComponent<HexCell>().myCellState != StateController.state.invalid && hit.collider.gameObject.GetComponent<HexCell>().myCellState != StateController.state.empty) // if we haven't picked up a cell and the clicked one contains something...
                 {
                     startClickedCell = hit.collider.gameObject.GetComponent<HexCell>();  // ... set clicked cell to Start clicked cell.
 
@@ -62,7 +62,7 @@ public class ClickerManager : MonoBehaviour
 
                         goalClickedCell.myCellState = startClickedCell.myCellState;
                                       
-                        startClickedCell.myCellState = HexGrid.state.empty;
+                        startClickedCell.myCellState = StateController.state.empty;
 
                         print("Startcell state is now " + startClickedCell.myCellState);
                         print("Goalcell state is now " + goalClickedCell.myCellState);

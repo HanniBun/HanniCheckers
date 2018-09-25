@@ -15,8 +15,6 @@ public class HexCell : MonoBehaviour
     public bool clickableCell;
     public bool pickedUp;
 
-    //struct Coordinates { int row; int col; }  // Instead of using raycast, use coordinates? This can be made into a list as well. Neat!
-
     [SerializeField]
     private int _row, _col; // So that we can see the rows and col in the Inspector.
     public int row { get { return _row; } set { _row = value; } }   
@@ -30,7 +28,9 @@ public class HexCell : MonoBehaviour
         ColorCheck(); // does a color check on start, and "sets" the cell accordingly with the right color, and if it's clickable or not.
     }
 
-    public void ColorCheck()
+    public void ColorCheck() //****************************************************************
+                             // On shitslearning, you suggested using a "uppslagningstabell" instead of this method. Did you mean Lookup or Dictionary? In that case, could you explain how you meant?
+                             // I could've asked you in person, but I have been unable to come to school.
     {
         switch (myCellState)
         {
@@ -86,15 +86,12 @@ public class HexCell : MonoBehaviour
                     return;
                 }
 
-            default:  // There's supposed to always be a default in a Switch statement, right?
+            default:
                 {
                     clickableCell = false;
                     this.gameObject.SetActive(false);
                     return;
                 }
         }
-
-
-
     }
 }

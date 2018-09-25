@@ -54,14 +54,14 @@ public class ClickerManager : MonoBehaviour
               else if (pickedUpCell == true) // If we HAVE picked up a cell...
             {
                 goalClickedCell = hit.collider.gameObject.GetComponent<HexCell>();
-                    if (myHexgridController.allMyNeighbors.Contains(goalClickedCell)) 
-                                                                                  
-                    {                                                                  // Note to self: check neighbors of StartCell, see if goalClickedCell is one of them? Or if it's just clickable?
+
+                    if (myHexgridController.allMyNeighbors.Contains(goalClickedCell) && goalClickedCell != startClickedCell)
+                    {
                         print("You can move here.");
                         myHexgridController.allMyNeighbors.Clear(); // Empties the list when you place new cell down.
 
                         goalClickedCell.myCellState = startClickedCell.myCellState;
-                                      
+
                         startClickedCell.myCellState = StateController.state.empty;
 
                         print("Startcell state is now " + startClickedCell.myCellState);
@@ -72,8 +72,16 @@ public class ClickerManager : MonoBehaviour
 
                         pickedUpCell = false;
                     }
+                    else if (goalClickedCell == startClickedCell)
+                    {
+                        print("Clicked the same thing twice.");
+                        pickedUpCell = false;
+                        startClickedCell.ColorCheck(); // Return color?
+                    }
                     else
+                    {
                         print("Something went wrong.");
+                    }
 
             }
                 else

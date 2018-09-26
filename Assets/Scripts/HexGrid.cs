@@ -34,7 +34,7 @@ public class HexGrid : MonoBehaviour
 
                 tempCell.transform.parent = this.transform; // Makes it not so cluttered in the hierarchy. Yay, structure!
 
-                tempCell.GetComponent<HexCell>().myCellState = myStateController.States[i, j]; // Gets its state from the array.
+                tempCell.GetComponent<HexCell>().myCellState = myStateController.States[i, j]; // Gets the cell's state from the array of states.
                 tempCell.GetComponent<HexCell>().row = i;
                 tempCell.GetComponent<HexCell>().col = j;
 

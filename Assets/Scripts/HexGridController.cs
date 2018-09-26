@@ -38,36 +38,39 @@ public class HexGridController : MonoBehaviour {
 
     void ENeighborCheck(int row, int col)
     {
-        if (myHexGrid.myGameBoard[row, col + 1].myCellState == StateController.state.empty)
+        if (myHexGrid.myGameBoard[row, col + 1].myCellState == StateController.state.empty) // If empty
         {
-            print("There's an empty spot to our right");
+            //print("There's an empty spot to our right");
             allMyNeighbors.Add(myHexGrid.myGameBoard[row, col + 1]); // added to list!
         }
 
-        if (myHexGrid.myGameBoard[row, col + 1].clickableCell == true)
+        else if (myHexGrid.myGameBoard[row, col + 1].myCellState != StateController.state.empty) // add invalid as well, even though they're set to not enabled?
         {
-            print("Hey, there's someone to the right.");
+            //print("Hey, there's someone to the right.");
+            ENeighborCheck(myHexGrid.myGameBoard[row, col + 1].row, myHexGrid.myGameBoard[row, col + 1].col);
         }
         else
         {
-            print("Nothing to the right!");
+            //print("Can't move to the right!");
         }
     }
 
     void WNeighborCheck(int row, int col)
     {
-        if (myHexGrid.myGameBoard[row, col - 1].myCellState == StateController.state.empty)
+        if (myHexGrid.myGameBoard[row, col - 1] != null && myHexGrid.myGameBoard[row, col - 1].myCellState == StateController.state.empty)
         {
-            print("There's an empty spot to our left!");
+            //print("There's an empty spot to our left!");
             allMyNeighbors.Add(myHexGrid.myGameBoard[row, col - 1]); // added to list!
         }
-        if (myHexGrid.myGameBoard[row, col - 1].myCellState != StateController.state.empty || myHexGrid.myGameBoard[row, col - 1].clickableCell == true)
+        else if (myHexGrid.myGameBoard[row, col - 1].myCellState != StateController.state.empty && myHexGrid.myGameBoard[row, col - 2].myCellState == StateController.state.empty)
         {
-            print("Hey, there's someone to the left.");
+            WNeighborCheck(myHexGrid.myGameBoard[row, col - 2].row, myHexGrid.myGameBoard[row, col - 2].col);
+            allMyNeighbors.Add(myHexGrid.myGameBoard[row, col - 2]);
+            //print("Hey, there's someone to the left.");
         }
         else
         {
-            print("Nothing to the right!");
+            //print("Can't move to the left");
         }
     }
 
@@ -82,7 +85,7 @@ public class HexGridController : MonoBehaviour {
 
             else
             {
-                print("You can't move to the northeast.");
+                //print("You can't move to the northeast.");
             }
         }
         else
@@ -94,7 +97,7 @@ public class HexGridController : MonoBehaviour {
 
             else
             {
-                print("You can't move to the northeast.");
+                //print("You can't move to the northeast.");
             }
         }
     }
@@ -109,7 +112,7 @@ public class HexGridController : MonoBehaviour {
             }
             else
             {
-                print("You can't move to the northwest.");
+                //print("You can't move to the northwest.");
 
                 // Enable jumping!
                 //if (myHexGrid.myGameBoard[row + 2, column - 1].myCellState == HexCell.cellState.empty &&
@@ -127,7 +130,7 @@ public class HexGridController : MonoBehaviour {
             }
             else
             {
-                print("You can't go to the northwest.");
+                //print("You can't go to the northwest.");
                 //if (matris[row + 2, column - 1].state == Tile.TileState.open &&
                 //    matris[row + 1, column - 1].state != Tile.TileState.open && !validJumpList.Contains(matris[row + 2, column - 1]))
                 //{
@@ -182,7 +185,7 @@ public class HexGridController : MonoBehaviour {
             }
             else
             {
-                print("You can't go to the southwest.");
+                //print("You can't go to the southwest.");
                 //if (matris[row - 2, column - 1].state == Tile.TileState.open &&
                 //    matris[row - 1, column].state != Tile.TileState.open && !validJumpList.Contains(matris[row - 2, column - 1]))
                 //{
@@ -199,7 +202,7 @@ public class HexGridController : MonoBehaviour {
             }
             else
             {
-                print("You can't go to the southwest.");
+                //print("You can't go to the southwest.");
                 //if (matris[row - 2, column - 1].state == Tile.TileState.open &&
                 //    matris[row - 1, column - 1].state != Tile.TileState.open && !validJumpList.Contains(matris[row - 2, column - 1]))
                 //{

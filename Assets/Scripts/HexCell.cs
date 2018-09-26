@@ -9,17 +9,14 @@ public class HexCell : MonoBehaviour
     [SerializeField]
     HexGridController myGridController;  // Used to reach the materials for the cells!
 
-
     public StateController.state myCellState { get; set; }
 
     public bool clickableCell;
-    public bool pickedUp;
 
     [SerializeField]
-    private int _row, _col; // So that we can see the rows and col in the Inspector.
+    private int _row, _col; 
     public int row { get { return _row; } set { _row = value; } }   
-    public int col { get { return _col; } set { _col = value; } }   // I'm not entirely sure these are necessary, but I'm leaving them as they are for now.
-
+    public int col { get { return _col; } set { _col = value; } } 
 
     private void Start()
     {

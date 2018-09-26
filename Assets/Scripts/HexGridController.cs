@@ -9,7 +9,6 @@ public class HexGridController : MonoBehaviour {
     // Neighborchecks methods are taken directly from a classmate's code but changed since I don't use "jumping" over occupied cells yet.
     // I really should rename this script to "NeighborController" or something like that.
 
-
     [SerializeField]
     HexGrid myHexGrid;
 
@@ -20,10 +19,12 @@ public class HexGridController : MonoBehaviour {
     public List<HexCell> allMyNeighbors = new List<HexCell>();   // Temporary list that is supposed to be made every time a movable cell is clicked.
                                                                  //  Somehow reach this list from ClickerManager. Or maybe actually have the list there instead.
 
-    public void AllNeighborCheck(int row, int col) // Return List instead??
+    //public bool hasJumped = false; // For jump-chaining to work correctly
+
+    public void AllNeighborCheck(int row, int col, bool jumped) // Return List instead??
     {
         ENeighborCheck(row, col);
-        WNeighborCheck(row, col);
+        WNeighborCheck(row, col, jumped);
         NENeighborCheck(row, col);
         NWNeighborCheck(row, col);
         SENeighborCheck(row, col);
@@ -32,46 +33,66 @@ public class HexGridController : MonoBehaviour {
         foreach (HexCell neighbors in allMyNeighbors)
         {
             neighbors.clickableCell = true; // Neighbors are clickable.
-            //neighbors.gameObject.GetComponent<Renderer>().material = cellHighlightColor;
+            neighbors.gameObject.GetComponent<Renderer>().material = cellHighlightColor;
         }
     }
 
     void ENeighborCheck(int row, int col)
     {
-        if (myHexGrid.myGameBoard[row, col + 1].myCellState == StateController.state.empty) // If empty
-        {
-            //print("There's an empty spot to our right");
-            allMyNeighbors.Add(myHexGrid.myGameBoard[row, col + 1]); // added to list!
+        // East is empty
+        if (myHexGrid.myGameBoard[row, col + 1] != null &&
+            myHexGrid.myGameBoard[row, col + 1].myCellState == StateController.state.empty /*&& !hasJumped*/)
+
+        {     
+            allMyNeighbors.Add(myHexGrid.myGameBoard[row, col + 1]); 
         }
 
-        else if (myHexGrid.myGameBoard[row, col + 1].myCellState != StateController.state.empty) // add invalid as well, even though they're set to not enabled?
+        // East is not empty, and east +1 is empty
+        else if (myHexGrid.myGameBoard[row, col + 1].myCellState != StateController.state.empty && 
+                myHexGrid.myGameBoard[row, col + 2].myCellState == StateController.state.empty /*&& !hasJumped*/)
+
         {
-            //print("Hey, there's someone to the right.");
-            ENeighborCheck(myHexGrid.myGameBoard[row, col + 1].row, myHexGrid.myGameBoard[row, col + 1].col);
+            allMyNeighbors.Add(myHexGrid.myGameBoard[row, col + 2]);
+            ENeighborCheck(myHexGrid.myGameBoard[row, col + 2].row, myHexGrid.myGameBoard[row, col + 2].col);
         }
+
         else
         {
             //print("Can't move to the right!");
         }
     }
 
-    void WNeighborCheck(int row, int col)
+    void WNeighborCheck(int row, int col, bool hasJumped)
     {
-        if (myHexGrid.myGameBoard[row, col - 1] != null && myHexGrid.myGameBoard[row, col - 1].myCellState == StateController.state.empty)
+        // West exists and is empty
+        if (myHexGrid.myGameBoard[row, col - 1] != null && !hasJumped && 
+            myHexGrid.myGameBoard[row, col - 1].myCellState == StateController.state.empty)
         {
-            //print("There's an empty spot to our left!");
-            allMyNeighbors.Add(myHexGrid.myGameBoard[row, col - 1]); // added to list!
+            allMyNeighbors.Add(myHexGrid.myGameBoard[row, col - 1]);
+
         }
-        else if (myHexGrid.myGameBoard[row, col - 1].myCellState != StateController.state.empty && myHexGrid.myGameBoard[row, col - 2].myCellState == StateController.state.empty)
+       
+        
+        // West is not empty, and west +1 exists and is empty, and west +1 isn't in the neighbor list already
+        else if (myHexGrid.myGameBoard[row, col - 1] != null &&
+            myHexGrid.myGameBoard[row, col - 1].myCellState != StateController.state.empty && 
+                myHexGrid.myGameBoard[row, col - 2] != null && 
+                myHexGrid.myGameBoard[row, col - 2].myCellState == StateController.state.empty &&
+                !allMyNeighbors.Contains(myHexGrid.myGameBoard[row, col - 2]))
+
         {
-            WNeighborCheck(myHexGrid.myGameBoard[row, col - 2].row, myHexGrid.myGameBoard[row, col - 2].col);
-            allMyNeighbors.Add(myHexGrid.myGameBoard[row, col - 2]);
+            allMyNeighbors.Add(myHexGrid.myGameBoard[row, col - 2]); // Add west +1 to neighbor list
+            hasJumped = true;
+            print("Jumping is true");
+            WNeighborCheck(myHexGrid.myGameBoard[row, col - 2].row, myHexGrid.myGameBoard[row, col - 2].col, true); //Neighborcheck on west (the one that's not empty) (chaining)
             //print("Hey, there's someone to the left.");
         }
-        else
+   
+        else 
         {
-            //print("Can't move to the left");
+            print("Can't move to the left");
         }
+        
     }
 
     public void NENeighborCheck(int row, int column /*bool hasJumped*/)

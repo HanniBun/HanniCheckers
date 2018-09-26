@@ -38,22 +38,33 @@ public class ClickerManager : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit) && hit.collider.gameObject.GetComponent<HexCell>() == true) // If we click on a cell...
             {
-                if (pickedUpCell == false && hit.collider.gameObject.GetComponent<HexCell>().myCellState != StateController.state.invalid && hit.collider.gameObject.GetComponent<HexCell>().myCellState != StateController.state.empty) // if we haven't picked up a cell and the clicked one contains something...
+                if (pickedUpCell == false && 
+                    hit.collider.gameObject.GetComponent<HexCell>().myCellState != StateController.state.invalid && 
+                    hit.collider.gameObject.GetComponent<HexCell>().myCellState != StateController.state.empty) // if we haven't picked up a cell and the clicked one contains something...
                 {
                     startClickedCell = hit.collider.gameObject.GetComponent<HexCell>();  // ... set clicked cell to Start clicked cell.
-                    print("Hello! My index is... " + "row: " + startClickedCell.row.ToString() + ", col: " + startClickedCell.col + ", and I'm " + startClickedCell.myCellState);
                     pickedUpCell = true; // Pick it up!
+                    print("Cell picked up.");
 
-                    myHexgridController.AllNeighborCheck(startClickedCell.row, startClickedCell.col); // Check for neighbors
+                    myHexgridController.AllNeighborCheck(startClickedCell.row, startClickedCell.col, false); // Check for neighbors
                     startClickedCell.gameObject.GetComponent<Renderer>().material = clickedMaterial;
                 }
 
                 else if (pickedUpCell == true) // If we HAVE picked up a cell...
-            {
-                goalClickedCell = hit.collider.gameObject.GetComponent<HexCell>();
+                {
+                    goalClickedCell = hit.collider.gameObject.GetComponent<HexCell>();
 
-                    if (myHexgridController.allMyNeighbors.Contains(goalClickedCell) && goalClickedCell != startClickedCell)
-                    {                       
+                    if (myHexgridController.allMyNeighbors.Contains(goalClickedCell) &&
+                        goalClickedCell != startClickedCell) // If goalcell is valid (i.e. a neighbor and not startcell)
+                    {
+                        pickedUpCell = false;
+                        //myHexgridController.hasJumped = false;
+                        print("Cell moved.");
+
+                        foreach (HexCell neighbors in myHexgridController.allMyNeighbors)
+                        {
+                            neighbors.ColorCheck(); // To return original color? 
+                        }
                         myHexgridController.allMyNeighbors.Clear(); // Empties the list when you place new cell down.
 
                         goalClickedCell.myCellState = startClickedCell.myCellState;
@@ -61,28 +72,42 @@ public class ClickerManager : MonoBehaviour
                         startClickedCell.ColorCheck();
                         goalClickedCell.ColorCheck();     // Can't this if-loop be made any smoother?
 
-                        pickedUpCell = false;
                     }
+
                     else if (goalClickedCell == startClickedCell)
                     {
-                        print("Clicked the same thing twice.");
                         pickedUpCell = false;
+                        //myHexgridController.hasJumped = false;
+
+                        print("Clicked the same thing twice.");
+
+                        foreach (HexCell neighbors in myHexgridController.allMyNeighbors)
+                        {
+                            neighbors.ColorCheck(); // To return original color? 
+                        }
+                        myHexgridController.allMyNeighbors.Clear();
+
+
                         startClickedCell.ColorCheck(); // Returns original color.
                     }
+
                     else
                     {
                         print("Something went wrong.");
                     }
 
-            }
+                }
+
                 else
+                {
                     print("You can't click me, fool.");
+                }
             }
-         
+
             else // When clicking on something else than something containing a HexCell
-            print("Area out of bounds");
+            {
+                print("Area out of bounds");
+            }
         }
-
-
     }
 }

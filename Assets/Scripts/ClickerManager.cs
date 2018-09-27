@@ -46,7 +46,7 @@ public class ClickerManager : MonoBehaviour
                     pickedUpCell = true; // Pick it up!
                     print("Cell picked up.");
 
-                    myHexgridController.AllNeighborCheck(startClickedCell.row, startClickedCell.col, false); // Check for neighbors
+                    myHexgridController.AllNeighborCheck(startClickedCell.row, startClickedCell.col, false); // Sets jumping to false since it's a new, fresh cell we're clicking.
                     startClickedCell.gameObject.GetComponent<Renderer>().material = clickedMaterial;
                 }
 
@@ -58,37 +58,33 @@ public class ClickerManager : MonoBehaviour
                         goalClickedCell != startClickedCell) // If goalcell is valid (i.e. a neighbor and not startcell)
                     {
                         pickedUpCell = false;
-                        //myHexgridController.hasJumped = false;
                         print("Cell moved.");
 
                         foreach (HexCell neighbors in myHexgridController.allMyNeighbors)
                         {
-                            neighbors.ColorCheck(); // To return original color? 
+                            neighbors.ColorCheck(); // To return original color.
                         }
                         myHexgridController.allMyNeighbors.Clear(); // Empties the list when you place new cell down.
 
                         goalClickedCell.myCellState = startClickedCell.myCellState;
                         startClickedCell.myCellState = StateController.state.empty;
                         startClickedCell.ColorCheck();
-                        goalClickedCell.ColorCheck();     // Can't this if-loop be made any smoother?
-
+                        goalClickedCell.ColorCheck();   
                     }
 
                     else if (goalClickedCell == startClickedCell)
                     {
                         pickedUpCell = false;
-                        //myHexgridController.hasJumped = false;
-
                         print("Clicked the same thing twice.");
 
                         foreach (HexCell neighbors in myHexgridController.allMyNeighbors)
                         {
-                            neighbors.ColorCheck(); // To return original color? 
+                            neighbors.ColorCheck(); // To return original color.
                         }
                         myHexgridController.allMyNeighbors.Clear();
 
 
-                        startClickedCell.ColorCheck(); // Returns original color.
+                        startClickedCell.ColorCheck(); // Returns original color to StartCell.
                     }
 
                     else

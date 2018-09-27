@@ -35,5 +35,4 @@ public class PlayerController : MonoBehaviour {
         PlayerPrefs.SetInt("PlayerAmount", 6);
         mySceneController.SceneChange();
     }
-
 }

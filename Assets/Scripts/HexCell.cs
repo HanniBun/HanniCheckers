@@ -34,7 +34,7 @@ public class HexCell : MonoBehaviour
             case StateController.state.invalid:
                 {
                     clickableCell = false;
-                    this.gameObject.SetActive(false);
+                    //this.gameObject.SetActive(false);
                     return;
                 }
 

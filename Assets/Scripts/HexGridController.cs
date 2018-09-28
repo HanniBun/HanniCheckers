@@ -28,7 +28,7 @@ public class HexGridController : MonoBehaviour
         NENeighborCheck(row, col, jumped);
         NWNeighborCheck(row, col, jumped);
         SENeighborCheck(row, col, jumped);
-        SWNeighborCheck(row, col);
+        SWNeighborCheck(row, col, jumped);
 
         foreach (HexCell neighbors in allMyNeighbors)
         {
@@ -104,7 +104,7 @@ public class HexGridController : MonoBehaviour
     {
         if (row % 2 == 0)
         {
-            if (myHexGrid.myGameBoard[row + 1, column + 1] != null) // NE for even rows is not null
+            if (myHexGrid.myGameBoard[row + 1, column] != null) // NE for even rows is not null
             {
                 // If NE is empty, and we haven't jumped to this cell
                 if (myHexGrid.myGameBoard[row + 1, column + 1].myCellState == StateController.state.empty &&
@@ -114,7 +114,7 @@ public class HexGridController : MonoBehaviour
                 }
 
                 // If NE is NOT empty, NE +1 is not null and is empty, and NE +1 doesn't exist in the neighbor list
-                else if (myHexGrid.myGameBoard[row + 1, column + 1].myCellState == StateController.state.empty &&
+                else if (myHexGrid.myGameBoard[row + 1, column + 1].myCellState != StateController.state.empty &&
                    myHexGrid.myGameBoard[row + 2, column + 1] != null &&
                    myHexGrid.myGameBoard[row + 2, column + 1].myCellState == StateController.state.empty &&
                    !allMyNeighbors.Contains(myHexGrid.myGameBoard[row + 2, column + 1]))
@@ -171,11 +171,11 @@ public class HexGridController : MonoBehaviour
                 else if (myHexGrid.myGameBoard[row + 1, column].myCellState != StateController.state.empty &&
                     myHexGrid.myGameBoard[row + 2, column - 1] != null &&
                     myHexGrid.myGameBoard[row + 2, column - 1].myCellState == StateController.state.empty &&
-                    !allMyNeighbors.Contains(myHexGrid.myGameBoard[row + 2, column + 1]))
+                    !allMyNeighbors.Contains(myHexGrid.myGameBoard[row + 2, column - 1]))
 
                 {
-                    allMyNeighbors.Add(myHexGrid.myGameBoard[row + 2, column + 1]);
-                    NWNeighborCheck(myHexGrid.myGameBoard[row + 2, column + 1].row, myHexGrid.myGameBoard[row + 2, column + 1].col, true);
+                    allMyNeighbors.Add(myHexGrid.myGameBoard[row + 2, column - 1]);
+                    NWNeighborCheck(myHexGrid.myGameBoard[row + 2, column - 1].row, myHexGrid.myGameBoard[row + 2, column - 1].col, true);
                 }
 
             }
@@ -218,64 +218,80 @@ public class HexGridController : MonoBehaviour
                 }
 
                 else if (myHexGrid.myGameBoard[row - 1, column + 1].myCellState != StateController.state.empty &&
+                    myHexGrid.myGameBoard[row - 2, column + 1] != null &&
                     myHexGrid.myGameBoard[row - 2, column + 1].myCellState == StateController.state.empty)
-                    print("You can't move to the southeast.");
-
+                {
+                    allMyNeighbors.Add(myHexGrid.myGameBoard[row - 2, column + 1]);
+                    SENeighborCheck(myHexGrid.myGameBoard[row - 2, column + 1].row, myHexGrid.myGameBoard[row - 2, column + 1].col, true);
+                }
             }
-        }
-        else //Uneven rows
-        {
-            if (myHexGrid.myGameBoard[row - 1, column] != null &&
-                myHexGrid.myGameBoard[row - 1, column].myCellState == StateController.state.empty)
-                allMyNeighbors.Add(myHexGrid.myGameBoard[row - 1, column]);
 
             else
-                print("You can't go to the southeast.");
-            //if (matris[row - 2, column + 1].state == Tile.TileState.open &&
-            //      matris[row - 1, column].state != Tile.TileState.open && !validJumpList.Contains(matris[row - 2, column + 1]))
-            //{
-            //    validJumpList.Add(matris[row - 2, column + 1]);
-            //    CheckForValidMoves(matris[row - 2, column + 1].GetComponent<Tile>(), true);
-            //}
+            {
+                //print("Can't go there.");
+            }
+        }
+
+        else //Uneven rows
+        {
+            if (myHexGrid.myGameBoard[row - 1, column] != null)
+            {
+                if (myHexGrid.myGameBoard[row - 1, column].myCellState == StateController.state.empty &&
+                    !hasJumped)
+                {
+                    allMyNeighbors.Add(myHexGrid.myGameBoard[row - 1, column]);
+                }
+
+                else if (myHexGrid.myGameBoard[row - 1, column].myCellState != StateController.state.empty &&
+                    myHexGrid.myGameBoard[row - 2, column + 1] != null &&
+                    myHexGrid.myGameBoard[row - 2, column + 1].myCellState == StateController.state.empty)
+                {
+                    allMyNeighbors.Add(myHexGrid.myGameBoard[row - 2, column + 1]);
+                    SENeighborCheck(myHexGrid.myGameBoard[row - 2, column + 1].row, myHexGrid.myGameBoard[row - 2, column + 1].col, true);
+                }
+
+            }
         }
     }
 
-    public void SWNeighborCheck(int row, int column)
+    public void SWNeighborCheck(int row, int column, bool hasJumped)
     {
         if (row % 2 == 0)
         {
-            if (myHexGrid.myGameBoard[row - 1, column] != null &&
-                myHexGrid.myGameBoard[row - 1, column].myCellState == StateController.state.empty)
+            if (myHexGrid.myGameBoard[row - 1, column] != null)
             {
-                allMyNeighbors.Add(myHexGrid.myGameBoard[row - 1, column]);
-            }
-            else
-            {
-                //print("You can't go to the southwest.");
-                //if (matris[row - 2, column - 1].state == Tile.TileState.open &&
-                //    matris[row - 1, column].state != Tile.TileState.open && !validJumpList.Contains(matris[row - 2, column - 1]))
-                //{
-                //    validJumpList.Add(matris[row - 2, column - 1]);
-                //    CheckForValidMoves(matris[row - 2, column - 1].GetComponent<Tile>(), true);
-                //}
+                if (myHexGrid.myGameBoard[row - 1, column].myCellState == StateController.state.empty &&
+                        !hasJumped)
+                {
+                    allMyNeighbors.Add(myHexGrid.myGameBoard[row - 1, column]);
+                }
+
+                else if (myHexGrid.myGameBoard[row - 1, column].myCellState != StateController.state.empty &&
+                    myHexGrid.myGameBoard[row - 2, column - 1] != null &&
+                    myHexGrid.myGameBoard[row - 2, column - 1].myCellState == StateController.state.empty)
+                {
+                    allMyNeighbors.Add(myHexGrid.myGameBoard[row - 2, column - 1]);
+                    SWNeighborCheck(myHexGrid.myGameBoard[row - 2, column - 1].row, myHexGrid.myGameBoard[row - 2, column - 1].col, true);
+                }
             }
         }
         else // uneven rows
         {
-            if (myHexGrid.myGameBoard[row - 1, column - 1] != null &&
-                myHexGrid.myGameBoard[row - 1, column - 1].myCellState == StateController.state.empty)
+            if (myHexGrid.myGameBoard[row - 1, column - 1] != null)
             {
-                allMyNeighbors.Add(myHexGrid.myGameBoard[row - 1, column - 1]);
-            }
-            else
-            {
-                //print("You can't go to the southwest.");
-                //if (matris[row - 2, column - 1].state == Tile.TileState.open &&
-                //    matris[row - 1, column - 1].state != Tile.TileState.open && !validJumpList.Contains(matris[row - 2, column - 1]))
-                //{
-                //    validJumpList.Add(matris[row - 2, column - 1]);
-                //    CheckForValidMoves(matris[row - 2, column - 1].GetComponent<Tile>(), true);
-                //}
+                if (myHexGrid.myGameBoard[row - 1, column - 1].myCellState == StateController.state.empty &&
+                    !hasJumped)
+                {
+                    allMyNeighbors.Add(myHexGrid.myGameBoard[row - 1, column - 1]);
+                }
+
+                else if (myHexGrid.myGameBoard[row - 1, column - 1].myCellState != StateController.state.empty &&
+                    myHexGrid.myGameBoard[row - 2, column - 1] != null &&
+                    myHexGrid.myGameBoard[row - 2, column - 1].myCellState == StateController.state.empty)
+                {
+                    allMyNeighbors.Add(myHexGrid.myGameBoard[row - 2, column - 1]);
+                    SWNeighborCheck(myHexGrid.myGameBoard[row - 2, column - 1].row, myHexGrid.myGameBoard[row - 2, column - 1].col, true);
+                }
             }
         }
     }

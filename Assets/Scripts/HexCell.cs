@@ -25,9 +25,7 @@ public class HexCell : MonoBehaviour
         ColorCheck(); // does a color check on start, and "sets" the cell accordingly with the right color, and if it's clickable or not.
     }
 
-    public void ColorCheck() //****************************************************************
-                             // On shitslearning, you suggested using a "uppslagningstabell" instead of this method. Did you mean Lookup or Dictionary? In that case, could you explain how you meant?
-                             // I could've asked you in person, but I have been unable to come to school.
+    public void ColorCheck() // Note to self: Connect states with the cellcolors, they have the same index :)
     {
         switch (myCellState)
         {

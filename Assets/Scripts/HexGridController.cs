@@ -19,7 +19,6 @@ public class HexGridController : MonoBehaviour
 
     public List<HexCell> allMyNeighbors = new List<HexCell>();   // Temporary list that is supposed to be made every time a valid cell is clicked.
 
-    //public bool hasJumped = false; // For jump-chaining to work correctly
 
     public void AllNeighborCheck(int row, int col, bool jumped) // Return List instead??
     {
@@ -39,8 +38,8 @@ public class HexGridController : MonoBehaviour
 
     void ENeighborCheck(int row, int col, bool hasJumped)
     {
-        // initial check: Are we on a eastern ledge? (i.e. east is null) Having this in the beginning makes it so the code skips this completely if it's null. Neat!
-        if (myHexGrid.myGameBoard[row, col + 1] != null)
+        // initial check: Are we on a eastern ledge? (i.e. east is null or out of array) Having this in the beginning makes it so the code skips this completely if it's not reachable. Neat!
+        if ((col + 1) < myHexGrid.myGameBoard.GetLength(1) && myHexGrid.myGameBoard[row, col + 1] != null)
         {
             // East is empty and we haven't jumped to this cell
             if (!hasJumped &&
@@ -72,7 +71,7 @@ public class HexGridController : MonoBehaviour
     void WNeighborCheck(int row, int col, bool hasJumped)
     {
         // Initial check: Are we on a west ledge? 
-        if (myHexGrid.myGameBoard[row, col - 1] != null)
+        if (/*(col - 1) >= 0 && */myHexGrid.myGameBoard[row, col - 1] != null)
         {
             // West is empty, and we haven't done a jump over anything on the board
             if (!hasJumped &&
@@ -104,7 +103,7 @@ public class HexGridController : MonoBehaviour
     {
         if (row % 2 == 0)
         {
-            if (myHexGrid.myGameBoard[row + 1, column] != null) // NE for even rows is not null
+            if (myHexGrid.myGameBoard[row + 1, column + 1] != null) // NE for even rows is not null
             {
                 // If NE is empty, and we haven't jumped to this cell
                 if (myHexGrid.myGameBoard[row + 1, column + 1] != null &&

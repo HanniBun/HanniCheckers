@@ -21,18 +21,16 @@ public class HexCell : MonoBehaviour
     private void Start()
     {
         myGridController = GetComponentInParent<HexGridController>();
-
-        ColorCheck(); // does a color check on start, and "sets" the cell accordingly with the right color, and if it's clickable or not.
+        ColorCheck(); 
     }
 
-    public void ColorCheck() // Note to self: Connect states with the cellcolors, they have the same index :)
+    public void ColorCheck() // Note to self: Can connect states with the cellcolors, they have the same index :)
     {
         switch (myCellState)
         {
             case StateController.state.invalid:
                 {
                     clickableCell = false;
-                    //this.gameObject.SetActive(false);
                     return;
                 }
 

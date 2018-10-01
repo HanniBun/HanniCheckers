@@ -2,6 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//Taken directly from MiniMax
+interface IState
+{
+    int currentValue { get; set; }
+    List<IState> Expand(IPlayer player);
+    int Value(IPlayer player);
+}
+
+interface IPlayer
+{
+
+}
+
+
+
 public class HexGrid : MonoBehaviour
 {
     [SerializeField] GameObject cellPrefab;
@@ -12,11 +27,15 @@ public class HexGrid : MonoBehaviour
     public HexCell[,] myGameBoard = new HexCell[rows, columns];
 
     StateController myStateController;
+    SaveGameController mySaveGameController;
 
     void Start()
     {
         myStateController = this.GetComponent<StateController>();
-        myStateController.StateSetup(PlayerPrefs.GetInt("PlayerAmount"));
+        mySaveGameController = this.GetComponent<SaveGameController>();
+
+        myStateController.StateSetup(PlayerPrefs.GetInt("PlayerAmount")); // To be changed
+
 
         for (int i = 0; i < rows; i++)
         {

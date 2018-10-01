@@ -107,7 +107,8 @@ public class HexGridController : MonoBehaviour
             if (myHexGrid.myGameBoard[row + 1, column] != null) // NE for even rows is not null
             {
                 // If NE is empty, and we haven't jumped to this cell
-                if (myHexGrid.myGameBoard[row + 1, column + 1].myCellState == StateController.state.empty &&
+                if (myHexGrid.myGameBoard[row + 1, column + 1] != null &&
+                    myHexGrid.myGameBoard[row + 1, column + 1].myCellState == StateController.state.empty &&
                     !hasJumped)
                 {
                     allMyNeighbors.Add(myHexGrid.myGameBoard[row + 1, column + 1]);

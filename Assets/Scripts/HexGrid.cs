@@ -10,15 +10,22 @@ public class HexGrid : MonoBehaviour
     StateController myStateController;
     SaveGameController mySaveGameController;
 
+    [SerializeField]
+    PlayerController myPlayerController;
+
     [SerializeField] GameObject cellPrefab;
     GameObject tempCell;
 
     void Start()
-    {
+    {        
         myStateController = this.GetComponent<StateController>();
         mySaveGameController = this.GetComponent<SaveGameController>();
 
-        myStateController.StateSetup(PlayerPrefs.GetInt("PlayerAmount")); // To be changed
+        myPlayerController = GameObject.FindGameObjectWithTag("PlayerHandler").GetComponent<PlayerController>();
+
+
+        myPlayerController.AddPlayers();
+        myStateController.StateSetup(myPlayerController.amountOfPlayers);
 
 
         for (int i = 0; i < rows; i++)

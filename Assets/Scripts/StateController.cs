@@ -33,14 +33,14 @@ public class StateController : MonoBehaviour
         {
             case 2:
                 {
-                    print(PlayerPrefs.GetInt("PlayerAmount").ToString() + " players");
-                    topPlayer(State.red, PlayerPrefs.GetInt("PlayerAmount"));
-                    bottomPlayer(State.blue, PlayerPrefs.GetInt("PlayerAmount"));
+                    print(amountOfPlayers.ToString() + " players");
+                    topPlayer(State.red, amountOfPlayers);
+                    bottomPlayer(State.blue, amountOfPlayers);
                     return;
                 }
             case 3:
                 {
-                    print(PlayerPrefs.GetInt("PlayerAmount").ToString() + " players");
+                    print(amountOfPlayers.ToString() + " players");
                     //topPlayer(state.red); 
                     //bottomRightPlayer(state.purple);
                     //bottomLeftPlayer(state.yellow);
@@ -50,7 +50,7 @@ public class StateController : MonoBehaviour
                 }
             case 4:
                 {
-                    print(PlayerPrefs.GetInt("PlayerAmount").ToString() + " players");
+                    print(amountOfPlayers.ToString() + " players");
                     //topPlayer(state.red);
                     //topRightPlayer(state.purple);
                     //bottomPlayer(state.blue);
@@ -60,7 +60,7 @@ public class StateController : MonoBehaviour
                 }
             case 6:
                 {
-                    print(PlayerPrefs.GetInt("PlayerAmount").ToString() + " players");
+                    print(amountOfPlayers.ToString() + " players");
                     print("More than two players isn't supported yet.");
                     return;
                 }

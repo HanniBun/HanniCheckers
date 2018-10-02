@@ -2,36 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : MonoBehaviour
+{
+    public int amountOfPlayers; // List.Count?
 
-    SceneController mySceneController;
+    public Dictionary<string, Player> allPlayers /*= new Dictionary<string, Player>()*/;
+
 
     private void Start()
     {
-        mySceneController = this.GetComponent<SceneController>();
+        DontDestroyOnLoad(this.gameObject);
     }
 
-    public void twoPlayersClicked()
+    public void AddPlayers()
     {
-        PlayerPrefs.SetInt("PlayerAmount", 2);
-        mySceneController.SceneChange();
+        // use amount of players and add that same amount of <Player> to this list.
+        allPlayers = new Dictionary<string, Player>();
+
+        for (int i = 0; i < amountOfPlayers; i++)
+        {
+            print("I have added " + "players");
+            Player player = new Player();
+            allPlayers.Add(("Player " + i), player);
+        }
     }
 
-    public void threePlayersClicked()
-    {
-        PlayerPrefs.SetInt("PlayerAmount", 3);
-        mySceneController.SceneChange();
-    }
 
-    public void fourPlayersClicked()
-    {
-        PlayerPrefs.SetInt("PlayerAmount", 4);
-        mySceneController.SceneChange();
-    }
 
-    public void sixPlayersClicked()
-    {
-        PlayerPrefs.SetInt("PlayerAmount", 6);
-        mySceneController.SceneChange();
-    }
 }

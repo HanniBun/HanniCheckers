@@ -5,14 +5,38 @@ using UnityEngine.UI;
 
 public class MenuUIController : MonoBehaviour
 {
-    //[SerializeField]
-    //Text loadingErrorText;
+    [SerializeField]
+    SceneController mySceneController;
+    [SerializeField]
+    PlayerController myPlayerController;
 
-    //float visibleTime = 2f;
+    private void Start()
+    {
+        mySceneController = this.GetComponent<SceneController>();
+    }
 
-    //private void Start()
-    //{
-    //    loadingErrorText.enabled = false; 
-    //}
+    public void twoPlayersClicked()
+    {
+        myPlayerController.amountOfPlayers = 2;
+       // PlayerPrefs.SetInt("PlayerAmount", 2);
+        mySceneController.SceneChange();
+    }
 
+    public void threePlayersClicked()
+    {
+        //PlayerPrefs.SetInt("PlayerAmount", 3);
+        //mySceneController.SceneChange();
+    }
+
+    public void fourPlayersClicked()
+    {
+        //PlayerPrefs.SetInt("PlayerAmount", 4);
+        //mySceneController.SceneChange();
+    }
+
+    public void sixPlayersClicked()
+    {
+        //PlayerPrefs.SetInt("PlayerAmount", 6);
+        //mySceneController.SceneChange();
+    }
 }

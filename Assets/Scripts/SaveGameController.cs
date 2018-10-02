@@ -21,7 +21,7 @@ public class SaveGameController : MonoBehaviour
 
     public void SaveGame()
     {
-        SaveFile mySaveFile = new SaveFile(); // What happens to the old SaveFiles?? 
+        SaveFile mySaveFile = new SaveFile();
 
         for (int i = 0; i < myHexGrid.myGameBoard.GetLength(0); i++)
         {

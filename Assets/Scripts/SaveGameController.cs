@@ -34,7 +34,7 @@ public class SaveGameController : MonoBehaviour
 
                 else // If the index on the gameboard is null...
                 {
-                    mySaveFile.savedStates[i, j] = (int)StateController.state.invalid; // invalid becomes the same as null when it instantiates.
+                    mySaveFile.savedStates[i, j] = (int)StateController.State.invalid; // invalid becomes the same as null when it instantiates.
                 }
             }
         }
@@ -69,13 +69,13 @@ public class SaveGameController : MonoBehaviour
                 {
                     if (mySaveFile.savedStates[i, j] != 0)
                     {
-                        myHexGrid.myGameBoard[i, j].myCellState = (StateController.state)mySaveFile.savedStates[i, j];
+                        myHexGrid.myGameBoard[i, j].myCellState = (StateController.State)mySaveFile.savedStates[i, j];
                         myHexGrid.myGameBoard[i, j].ColorCheck();
                     }
 
                     else // If the index on the gameboard is null...
                     {
-                        mySaveFile.savedStates[i, j] = (int)StateController.state.invalid; // invalid becomes the same as null when it instantiates.
+                        mySaveFile.savedStates[i, j] = (int)StateController.State.invalid; // invalid becomes the same as null when it instantiates.
                     }
                 }
             }

@@ -39,8 +39,8 @@ public class ClickerManager : MonoBehaviour
             if (Physics.Raycast(ray, out hit) && hit.collider.gameObject.GetComponent<HexCell>() == true) // If we click on a cell...
             {
                 if (pickedUpCell == false && 
-                    hit.collider.gameObject.GetComponent<HexCell>().myCellState != StateController.state.invalid && 
-                    hit.collider.gameObject.GetComponent<HexCell>().myCellState != StateController.state.empty) // if we haven't picked up a cell and the clicked one contains something...
+                    hit.collider.gameObject.GetComponent<HexCell>().myCellState != StateController.State.invalid && 
+                    hit.collider.gameObject.GetComponent<HexCell>().myCellState != StateController.State.empty) // if we haven't picked up a cell and the clicked one contains something...
                 {
                     startClickedCell = hit.collider.gameObject.GetComponent<HexCell>();  // ... set clicked cell to Start clicked cell.
                     pickedUpCell = true; // Pick it up!
@@ -67,7 +67,7 @@ public class ClickerManager : MonoBehaviour
                         myHexgridController.allMyNeighbors.Clear(); // Empties the list when you place new cell down.
 
                         goalClickedCell.myCellState = startClickedCell.myCellState;
-                        startClickedCell.myCellState = StateController.state.empty;
+                        startClickedCell.myCellState = StateController.State.empty;
                         startClickedCell.ColorCheck();
                         goalClickedCell.ColorCheck();   
                     }

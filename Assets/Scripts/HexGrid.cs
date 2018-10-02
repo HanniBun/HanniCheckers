@@ -25,7 +25,7 @@ public class HexGrid : MonoBehaviour
         {
             for (int j = 0; j < columns; j++)
             {
-                if (myStateController.States[i, j] != StateController.state.invalid)
+                if (myStateController.States[i, j] != StateController.State.invalid)
                 {
                     if (i % 2 == 0)
                     {
@@ -40,10 +40,11 @@ public class HexGrid : MonoBehaviour
                     tempCell.transform.parent = this.transform; // Makes it not so cluttered in the hierarchy. Yay, structure!
 
                     tempCell.GetComponent<HexCell>().myCellState = myStateController.States[i, j]; // Gets the cell's state from the array of states.
-                    tempCell.GetComponent<HexCell>().row = i;
-                    tempCell.GetComponent<HexCell>().col = j;
+                    tempCell.GetComponent<HexCell>().row = j;
+                    tempCell.GetComponent<HexCell>().col = i;
 
                     myGameBoard[i, j] = tempCell.GetComponent<HexCell>();
+                    tempCell.name = string.Format("Cell({0},{1})", j, i);
                 }
 
                 else

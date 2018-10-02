@@ -4,27 +4,27 @@ using UnityEngine;
 
 public class StateController : MonoBehaviour
 {
-    public enum state { invalid, empty, blue, purple, green, orange, yellow, red };
+    public enum State { invalid, empty, blue, purple, green, orange, yellow, red };
 
-    public state[,] States = new state[17, 13]  // Each cell's state on the board. Changes depending on how many players (PlayerPref "PlayerAmount").
+    public State[,] States = new State[17, 13]  // Each cell's state on the board. Changes depending on how many players (PlayerPref "PlayerAmount").
 {
-        { state.invalid, state.invalid, state.invalid, state.invalid, state.invalid, state.invalid, state.empty, state.invalid, state.invalid, state.invalid, state.invalid, state.invalid, state.invalid },
-        { state.invalid, state.invalid, state.invalid, state.invalid, state.invalid, state.invalid, state.empty, state.empty, state.invalid, state.invalid, state.invalid, state.invalid, state.invalid },
-        { state.invalid, state.invalid, state.invalid, state.invalid, state.invalid, state.empty, state.empty, state.empty, state.invalid, state.invalid, state.invalid, state.invalid, state.invalid },
-        { state.invalid, state.invalid, state.invalid, state.invalid, state.invalid, state.empty, state.empty, state.empty, state.empty, state.invalid, state.invalid, state.invalid, state.invalid },
-        {state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty },
-        {state.invalid, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty },
-        {state.invalid, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.invalid },
-        {state.invalid, state.invalid, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.invalid },
-        {state.invalid, state.invalid, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.invalid, state.invalid },
-        {state.invalid, state.invalid, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.invalid },
-        {state.invalid, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.invalid },
-        {state.invalid, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty },
-        {state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty, state.empty },
-        {state.invalid, state.invalid, state.invalid, state.invalid, state.invalid, state.empty, state.empty, state.empty, state.empty, state.invalid, state.invalid, state.invalid, state.invalid },
-        {state.invalid, state.invalid, state.invalid, state.invalid, state.invalid, state.empty, state.empty, state.empty, state.invalid, state.invalid, state.invalid, state.invalid, state.invalid },
-        {state.invalid, state.invalid, state.invalid, state.invalid, state.invalid, state.invalid, state.empty, state.empty, state.invalid, state.invalid, state.invalid, state.invalid, state.invalid },
-        {state.invalid, state.invalid, state.invalid, state.invalid, state.invalid, state.invalid, state.empty, state.invalid, state.invalid, state.invalid, state.invalid, state.invalid, state.invalid }
+        { State.invalid, State.invalid, State.invalid, State.invalid, State.invalid, State.invalid, State.empty, State.invalid, State.invalid, State.invalid, State.invalid, State.invalid, State.invalid },
+        { State.invalid, State.invalid, State.invalid, State.invalid, State.invalid, State.invalid, State.empty, State.empty, State.invalid, State.invalid, State.invalid, State.invalid, State.invalid },
+        { State.invalid, State.invalid, State.invalid, State.invalid, State.invalid, State.empty, State.empty, State.empty, State.invalid, State.invalid, State.invalid, State.invalid, State.invalid },
+        { State.invalid, State.invalid, State.invalid, State.invalid, State.invalid, State.empty, State.empty, State.empty, State.empty, State.invalid, State.invalid, State.invalid, State.invalid },
+        {State.empty, State.empty, State.empty, State.empty, State.empty, State.empty, State.empty, State.empty, State.empty, State.empty, State.empty, State.empty, State.empty },
+        {State.invalid, State.empty, State.empty, State.empty, State.empty, State.empty, State.empty, State.empty, State.empty, State.empty, State.empty, State.empty, State.empty },
+        {State.invalid, State.empty, State.empty, State.empty, State.empty, State.empty, State.empty, State.empty, State.empty, State.empty, State.empty, State.empty, State.invalid },
+        {State.invalid, State.invalid, State.empty, State.empty, State.empty, State.empty, State.empty, State.empty, State.empty, State.empty, State.empty, State.empty, State.invalid },
+        {State.invalid, State.invalid, State.empty, State.empty, State.empty, State.empty, State.empty, State.empty, State.empty, State.empty, State.empty, State.invalid, State.invalid },
+        {State.invalid, State.invalid, State.empty, State.empty, State.empty, State.empty, State.empty, State.empty, State.empty, State.empty, State.empty, State.empty, State.invalid },
+        {State.invalid, State.empty, State.empty, State.empty, State.empty, State.empty, State.empty, State.empty, State.empty, State.empty, State.empty, State.empty, State.invalid },
+        {State.invalid, State.empty, State.empty, State.empty, State.empty, State.empty, State.empty, State.empty, State.empty, State.empty, State.empty, State.empty, State.empty },
+        {State.empty, State.empty, State.empty, State.empty, State.empty, State.empty, State.empty, State.empty, State.empty, State.empty, State.empty, State.empty, State.empty },
+        {State.invalid, State.invalid, State.invalid, State.invalid, State.invalid, State.empty, State.empty, State.empty, State.empty, State.invalid, State.invalid, State.invalid, State.invalid },
+        {State.invalid, State.invalid, State.invalid, State.invalid, State.invalid, State.empty, State.empty, State.empty, State.invalid, State.invalid, State.invalid, State.invalid, State.invalid },
+        {State.invalid, State.invalid, State.invalid, State.invalid, State.invalid, State.invalid, State.empty, State.empty, State.invalid, State.invalid, State.invalid, State.invalid, State.invalid },
+        {State.invalid, State.invalid, State.invalid, State.invalid, State.invalid, State.invalid, State.empty, State.invalid, State.invalid, State.invalid, State.invalid, State.invalid, State.invalid }
     };
 
     public void StateSetup(int amountOfPlayers)
@@ -34,8 +34,8 @@ public class StateController : MonoBehaviour
             case 2:
                 {
                     print(PlayerPrefs.GetInt("PlayerAmount").ToString() + " players");
-                    topPlayer(state.red, PlayerPrefs.GetInt("PlayerAmount"));
-                    bottomPlayer(state.blue, PlayerPrefs.GetInt("PlayerAmount"));
+                    topPlayer(State.red, PlayerPrefs.GetInt("PlayerAmount"));
+                    bottomPlayer(State.blue, PlayerPrefs.GetInt("PlayerAmount"));
                     return;
                 }
             case 3:
@@ -70,7 +70,7 @@ public class StateController : MonoBehaviour
         }
     }
 
-    void topPlayer(state color, int amountOfPlayers) // I made separate methods for each "home", to clear up the switch statement and make it easier to read.
+    void topPlayer(State color, int amountOfPlayers) // I made separate methods for each "home", to clear up the switch statement and make it easier to read.
     {
         States[0, 6] = color;
         States[1, 6] = color;
@@ -95,7 +95,7 @@ public class StateController : MonoBehaviour
             return;
     }
 
-    void bottomPlayer(state color, int amountOfPlayers)
+    void bottomPlayer(State color, int amountOfPlayers)
     {
         States[13, 5] = color;
         States[13, 6] = color;

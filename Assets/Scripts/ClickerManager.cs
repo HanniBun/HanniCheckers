@@ -4,31 +4,42 @@ using UnityEngine;
 
 public class ClickerManager : MonoBehaviour
 {
-    // This script handles click input from the player. Right now it uses a raycast, because I don't really feel like I have much time figuring out alternative methods that use less memory.
+    /// <summary>
+    /// This script handles click input from the player. Right now it uses a raycast, 
+    /// because I didn't really feel like I had enough time figuring out alternative methods that use less memory.
+    /// 
+    /// This script is not done: Except for the fact that it's not supposed to use
+    /// raycast for click input, I am also aware that it can be written easier to read. I have added comments for the
+    /// if statements that I feel are cluttered.
+    /// </summary>
+
+    #region Definitions and references
+
     [SerializeField]
     HexGridController myHexgridController;
-    bool pickedUpCell;
+    [SerializeField]
+    UIController myUIController;
+
+    PlayerController myPlayerController;
 
     [SerializeField]
-    HexCell startClickedCell;
+    HexCell firstClickedCell;
+
     [SerializeField]
-    HexCell goalClickedCell;
+    HexCell secondClickedCell;
 
     public Material clickedMaterial;
-
-    // Note to self: Maybe have a temporary list of myClickCell's neighbors here, for easy access? Or maybe keep it in the HexGridController?
-
-
-    //static int layer = 8;
-    //int layerMask = 1 << layer; 
-    // Had an idea on using layermasks with the raycast instead of GetComponent before. Keeping this variable if I need it in the future for some reason.
+    bool pickedUpCell;
+    #endregion
 
     private void Start()
     {
         pickedUpCell = false;
+
+        myPlayerController = FindObjectOfType<PlayerController>();
     }
 
-
+    #region Click input
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -36,62 +47,73 @@ public class ClickerManager : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit) && hit.collider.gameObject.GetComponent<HexCell>() == true) // If we click on a cell...
+            if (Physics.Raycast(ray, out hit) && hit.collider.gameObject.GetComponent<HexCell>() == true)
             {
-                if (pickedUpCell == false && 
-                    hit.collider.gameObject.GetComponent<HexCell>().myCellState != StateController.State.invalid && 
-                    hit.collider.gameObject.GetComponent<HexCell>().myCellState != StateController.State.empty) // if we haven't picked up a cell and the clicked one contains something...
+                Player currentPlayer = myPlayerController.allPlayers[myPlayerController.currentPlayer];
+
+
+                // If we haven't picked up anything yet, and the cell belongs to the current player
+                if (pickedUpCell == false &&
+                    hit.collider.gameObject.GetComponent<HexCell>().MyCellstate == currentPlayer.Color)
                 {
-                    startClickedCell = hit.collider.gameObject.GetComponent<HexCell>();  // ... set clicked cell to Start clicked cell.
-                    pickedUpCell = true; // Pick it up!
+                    firstClickedCell = hit.collider.gameObject.GetComponent<HexCell>();
+                    pickedUpCell = true;
                     print("Cell picked up.");
 
-                    myHexgridController.AllNeighborCheck(startClickedCell.row, startClickedCell.col, false); // Sets jumping to false since it's a new, fresh cell we're clicking.
-                    startClickedCell.gameObject.GetComponent<Renderer>().material = clickedMaterial;
+                    myHexgridController.AllNeighborCheck(firstClickedCell.row, firstClickedCell.col, false);
+                    firstClickedCell.gameObject.GetComponent<Renderer>().material = clickedMaterial;
                 }
 
                 else if (pickedUpCell == true) // If we HAVE picked up a cell...
                 {
-                    goalClickedCell = hit.collider.gameObject.GetComponent<HexCell>();
+                    secondClickedCell = hit.collider.gameObject.GetComponent<HexCell>();
 
-                    if (myHexgridController.allMyNeighbors.Contains(goalClickedCell) &&
-                        goalClickedCell != startClickedCell) // If goalcell is valid (i.e. a neighbor and not startcell)
+                    if (myHexgridController.allMyNeighbors.Contains(secondClickedCell) &&
+                        secondClickedCell != firstClickedCell) // If goalcell is valid (i.e. a neighbor and not startcell)
                     {
                         pickedUpCell = false;
                         print("Cell moved.");
 
                         foreach (HexCell neighbors in myHexgridController.allMyNeighbors)
                         {
-                            neighbors.ColorCheck(); // To return original color.
+                            neighbors.ColorCheck();
                         }
-                        myHexgridController.allMyNeighbors.Clear(); // Empties the list when you place new cell down.
+                        myHexgridController.allMyNeighbors.Clear();
 
-                        goalClickedCell.myCellState = startClickedCell.myCellState;
-                        startClickedCell.myCellState = StateController.State.empty;
-                        startClickedCell.ColorCheck();
-                        goalClickedCell.ColorCheck();   
+                        // Gives the cells the correct state
+                        secondClickedCell.MyCellstate = firstClickedCell.MyCellstate;
+                        firstClickedCell.MyCellstate = StateController.State.empty;
+                        firstClickedCell.ColorCheck();
+                        secondClickedCell.ColorCheck();
+
+                        myPlayerController.UpdatePlayerCellList(secondClickedCell, firstClickedCell);
+
+                        if (currentPlayer.playerGoalCells.Contains(secondClickedCell))
+                        {
+                            myPlayerController.WinCheck(currentPlayer);
+                        }
+
+                        myPlayerController.NextTurn();
                     }
 
-                    else if (goalClickedCell == startClickedCell)
+                    else if (secondClickedCell == firstClickedCell)
                     {
                         pickedUpCell = false;
                         print("Clicked the same thing twice.");
 
                         foreach (HexCell neighbors in myHexgridController.allMyNeighbors)
                         {
-                            neighbors.ColorCheck(); // To return original color.
+                            neighbors.ColorCheck();
                         }
                         myHexgridController.allMyNeighbors.Clear();
 
-
-                        startClickedCell.ColorCheck(); // Returns original color to StartCell.
+                        firstClickedCell.ColorCheck();
                     }
 
                     else
                     {
                         print("Something went wrong.");
                     }
-
                 }
 
                 else
@@ -107,3 +129,4 @@ public class ClickerManager : MonoBehaviour
         }
     }
 }
+#endregion

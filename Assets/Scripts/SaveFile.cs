@@ -9,6 +9,6 @@ public class SaveFile {
     public int[,] savedStates = new int [17,13];
 
     public int playerAmount;
+    public int currentPlayer;
 
-    // add more here later?
 }

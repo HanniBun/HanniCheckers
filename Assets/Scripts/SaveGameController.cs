@@ -7,18 +7,24 @@ using System.IO;
 
 public class SaveGameController : MonoBehaviour
 {
+    #region Definitions and references
     [SerializeField]
     UIController myUIController;
 
+    [SerializeField]
+    PlayerController myPlayerController;
+
     HexGrid myHexGrid;
-    StateController myStateController;
+    
 
     private void Start()
     {
         myHexGrid = this.GetComponent<HexGrid>();
-        myStateController = this.GetComponent<StateController>();
+        myPlayerController = FindObjectOfType<PlayerController>();
     }
+    #endregion
 
+    #region Save method and Load method
     public void SaveGame()
     {
         SaveFile mySaveFile = new SaveFile();
@@ -29,7 +35,7 @@ public class SaveGameController : MonoBehaviour
             {
                 if (myHexGrid.myGameBoard[i, j] != null)
                 {
-                    mySaveFile.savedStates[i, j] = (int)myHexGrid.myGameBoard[i, j].myCellState;
+                    mySaveFile.savedStates[i, j] = (int)myHexGrid.myGameBoard[i, j].MyCellstate;
                 }
 
                 else // If the index on the gameboard is null...
@@ -38,6 +44,9 @@ public class SaveGameController : MonoBehaviour
                 }
             }
         }
+
+        mySaveFile.currentPlayer = myPlayerController.currentPlayer;
+        mySaveFile.playerAmount = myPlayerController.playerAmount;
 
         BinaryFormatter formatter = new BinaryFormatter();
         Stream stream =
@@ -69,7 +78,7 @@ public class SaveGameController : MonoBehaviour
                 {
                     if (mySaveFile.savedStates[i, j] != 0)
                     {
-                        myHexGrid.myGameBoard[i, j].myCellState = (StateController.State)mySaveFile.savedStates[i, j];
+                        myHexGrid.myGameBoard[i, j].MyCellstate = (StateController.State)mySaveFile.savedStates[i, j];
                         myHexGrid.myGameBoard[i, j].ColorCheck();
                     }
 
@@ -80,6 +89,9 @@ public class SaveGameController : MonoBehaviour
                 }
             }
 
+            myPlayerController.currentPlayer = mySaveFile.currentPlayer;
+            myPlayerController.playerAmount = mySaveFile.playerAmount;
+
             print("We have loaded");
 
         }
@@ -89,4 +101,5 @@ public class SaveGameController : MonoBehaviour
             myUIController.LoadError();
         }
     }
+    #endregion
 }

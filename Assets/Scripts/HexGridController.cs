@@ -6,16 +6,18 @@ public enum Dir { Northeast, East, Southeast, Southwest, West, Northwest }
 
 public class HexGridController : MonoBehaviour
 {
+    /// <summary>
+    /// Used when checking for valid moves, as well as storing said moves, for a clicked cell. 
+    /// </summary>
+
     [SerializeField]
     HexGrid myHexGrid;
 
-    public Material[] cellColors = new Material[7]; 
+    public Material[] cellColors = new Material[7];
     [SerializeField]
     Material cellHighlightColor;
 
-
-
-    public List<HexCell> allMyNeighbors = new List<HexCell>();  
+    public List<HexCell> allMyNeighbors = new List<HexCell>();
 
 
     public void AllNeighborCheck(int row, int col, bool jumped)
@@ -27,11 +29,11 @@ public class HexGridController : MonoBehaviour
 
         foreach (HexCell neighbors in allMyNeighbors)
         {
-            neighbors.clickableCell = true;
             neighbors.gameObject.GetComponent<Renderer>().material = cellHighlightColor;
         }
     }
 
+    #region Direction Switch
     public void DirectionCheck(int row, int column, bool hasJumped, Dir direction)
     {
         int x = 0;
@@ -73,7 +75,7 @@ public class HexGridController : MonoBehaviour
                     x = row - 1;
                     y = column + 1;
                 }
-                break; 
+                break;
 
             case Dir.Southeast:
                 if (column % 2 == 0)
@@ -101,47 +103,45 @@ public class HexGridController : MonoBehaviour
                 }
                 break;
         }
+        #endregion
 
         if ((y < 0 || y >= 17) || (x < 0 || x >= 13)) // Check if rows or columns are out of index
         {
             return;
         }
 
+        HexCell originalCell = myHexGrid.myGameBoard[column, row];
+        HexCell destinationCell = myHexGrid.myGameBoard[y, x];
 
-        HexCell originalNode = myHexGrid.myGameBoard[column, row];
-        HexCell destinationNode = myHexGrid.myGameBoard[y, x];
-        Debug.Log(string.Format("Moving from ({0}) to ({1}) in {2}", originalNode, destinationNode, direction));
-
-
-        if (originalNode == null || destinationNode == null) // If the original node is null, abort mission. 
+        if (originalCell == null || destinationCell == null) // If the original cell is null, quit checking for valid moves.
         {
             return;
         }
 
-        if (destinationNode.myCellState == StateController.State.empty) // Destination is empty
+        #region Main check for valid move from a cell
+
+        if (destinationCell.MyCellstate == StateController.State.empty) // If destination cell is empty
         {
-            if (!hasJumped) // Not jumped
+            if (!hasJumped)
             {
-                if (!allMyNeighbors.Contains(destinationNode))
+                if (!allMyNeighbors.Contains(destinationCell))
                 {
-                    allMyNeighbors.Add(destinationNode);
+                    allMyNeighbors.Add(destinationCell);
                 }
             }
 
             else // If we have jumped to the cell we're on now
             {
-                
                 // If original node is NOT empty OR original node is NOT null
-                if (originalNode.myCellState != StateController.State.empty && originalNode.myCellState != StateController.State.invalid)
+                if (originalCell.MyCellstate != StateController.State.empty && originalCell.MyCellstate != StateController.State.invalid)
                 {
-                    // If destination isn't in the list of neighbors
-                    if (!allMyNeighbors.Contains(destinationNode))
+                    if (!allMyNeighbors.Contains(destinationCell))
                     {
-                        allMyNeighbors.Add(destinationNode);
+                        allMyNeighbors.Add(destinationCell);
 
                         for (int i = 0; i <= (int)Dir.Northwest; i++)
                         {
-                            DirectionCheck(x, y, true, (Dir)i);   // Directioncheck from DestinationNode's x and y, set jumping to true
+                            DirectionCheck(x, y, true, (Dir)i);
                         }
                     }
                 }
@@ -149,15 +149,17 @@ public class HexGridController : MonoBehaviour
             }
         }
 
-        else // Destination is not empty
+        else // Destination cell is not empty
         {
-            if (originalNode.myCellState != StateController.State.empty && hasJumped)
+            if (originalCell.MyCellstate != StateController.State.empty && hasJumped)
             {
                 return;
             }
 
             DirectionCheck(x, y, true, direction);
         }
+
+        #endregion
     }
 }
 

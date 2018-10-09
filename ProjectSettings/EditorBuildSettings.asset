@@ -9,9 +9,6 @@ EditorBuildSettings:
     path: 
     guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/Scenes/MenuChineseCheckers.unity
-    guid: 6535c7e0e3ef3224f9c684c4ff8026aa
-  - enabled: 1
     path: Assets/Scenes/ChineseCheckers.unity
     guid: 9f26a981b406e1745845d97e872cf2f7
   m_configObjects: {}

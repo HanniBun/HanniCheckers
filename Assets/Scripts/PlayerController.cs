@@ -14,6 +14,9 @@ public class PlayerController : MonoBehaviour
     // The script's not done: I have yet to connect the WinCheck() with some kind of UI element that informs the player who won.
 
     #region Definitions and references
+
+    UIController myUIController;
+
     public int currentPlayer = 0;
 
     public int playerAmount;
@@ -24,10 +27,6 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
-    private void Start()
-    {
-        DontDestroyOnLoad(this.gameObject);  // This is because the script needs to exist in both the menu and in game.
-    }
 
     public void AddPlayers()
     {
@@ -79,6 +78,7 @@ public class PlayerController : MonoBehaviour
             }          
         }
 
+        myUIController.Win(currentPlayer.ToString());
         Debug.Log(string.Format("{0} won!", currentPlayer));
         
         return true;

@@ -38,7 +38,10 @@ public class HexGrid : MonoBehaviour
     {
         myStateController = this.GetComponent<StateController>();
         myPlayerController = FindObjectOfType<PlayerController>();
+    }
 
+    public void GameSetUp()
+    {
         myPlayerController.AddPlayers();
         myStateController.StateSetup(myPlayerController.playerAmount);
 
